@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="welcome">Welkom bij Jrivia</string>
+    <string name="scoreboard">Scorebord</string>
+    <string name="single_player">Singleplayer</string>
+    <string name="multiplayer">Multiplayer (binnenkort beschikbaar)</string>
+    <string name="start">Start Spel</string>
+</resources>

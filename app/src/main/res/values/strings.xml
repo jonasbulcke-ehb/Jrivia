@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name" translatable="false">Jrivia</string>
+    <string name="welcome">Welcome to Jrivia</string>
+    <string name="single_player">Single-Player</string>
+    <string name="multiplayer">Multiplayer (coming soon)</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="start">Start Game</string>
+    <string translatable="false" name="explanation">10 trivia questions will be loaded. When you press the button \"Start Game\", a timer will start running. The time is not used for the score itself, but to determine the best when two scores are equal.0</string>
+
+
+</resources>
