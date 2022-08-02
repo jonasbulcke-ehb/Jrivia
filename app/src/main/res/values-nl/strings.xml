@@ -5,4 +5,10 @@
     <string name="single_player">Singleplayer</string>
     <string name="multiplayer">Multiplayer (binnenkort beschikbaar)</string>
     <string name="start">Start Spel</string>
+    <string name="back">Vorige</string>
+    <string name="next">Volgende</string>
+    <string name="question_number">Vraag %1$d</string>
+    <string name="answer">Antwoord:</string>
+    <string name="correct">Correct</string>
+    <string name="your_answer">Jouw antwoord: </string>
 </resources>

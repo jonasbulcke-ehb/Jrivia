@@ -7,35 +7,33 @@
     tools:context=".activities.GameLoadingActivity">
 
     <TextView
-        android:padding="24dp"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_start"
-        android:text="@string/explanation"
         android:lines="5"
-        />
+        android:padding="24dp"
+        android:text="@string/explanation"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/startButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btn_start"
+        android:id="@+id/startButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="36dp"
         android:text="@string/start"
         android:visibility="invisible"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:indeterminate="true"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

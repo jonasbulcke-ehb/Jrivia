@@ -7,7 +7,7 @@
     tools:context=".fragments.HomeFragment">
 
     <TextView
-        android:id="@+id/txt_welcome"
+        android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
@@ -25,23 +25,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_welcome">
+        app:layout_constraintTop_toBottomOf="@id/welcomeTextView">
 
         <Button
-            android:id="@+id/btn_singlePlayer"
+            android:id="@+id/singlePlayerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/single_player" />
 
         <Button
-            android:id="@+id/btn_multiplayer"
+            android:id="@+id/multiplayerButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/multiplayer" />
 
         <Button
-            android:id="@+id/btn_leaderboard"
+            android:id="@+id/leaderboardButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/scoreboard" />
