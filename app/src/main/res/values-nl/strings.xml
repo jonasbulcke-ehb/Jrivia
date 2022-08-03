@@ -11,4 +11,8 @@
     <string name="answer">Antwoord:</string>
     <string name="correct">Correct</string>
     <string name="your_answer">Jouw antwoord: </string>
+    <string name="error_clues_fetching">Er is iets verkeerds gelopen bij het laden van het spel. Probeer later opnieuw</string>
+    <string name="go_back">Ga terug</string>
+    <string name="game_start_error">Er ging iets verkeerd tijdens het opstarten van het spel</string>
+    <string name="finish">Voltooi</string>
 </resources>

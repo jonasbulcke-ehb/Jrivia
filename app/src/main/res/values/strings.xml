@@ -5,13 +5,17 @@
     <string name="multiplayer">Multiplayer (coming soon)</string>
     <string name="scoreboard">Scoreboard</string>
     <string name="start">Start Game</string>
-    <string name="explanation" translatable="false">10 trivia questions will be loaded. When you press the button \"Start Game\", a timer will start running. The time is not used for the score itself, but to determine the best when two scores are equal.0</string>
+    <string name="explanation" translatable="false">%1$d trivia questions will be loaded. When you press the button \"Start Game\", a timer will start running. The time is not used for the score itself, but to determine the best when two scores are equal.</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="question_number">Question %1$d</string>
     <string name="answer">Answer:</string>
     <string name="correct">Correct</string>
     <string name="your_answer">Your answer:</string>
+    <string name="error_clues_fetching">Something went wrong while trying to load the game. Try again later</string>
+    <string name="go_back">Go back</string>
+    <string name="game_start_error">Something went wrong while trying to start the game</string>
+    <string name="finish">Finish</string>
 
 
 </resources>

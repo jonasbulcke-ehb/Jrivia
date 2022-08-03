@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import be.ehb.gdt.jrivia.R
-import be.ehb.gdt.jrivia.activities.Clue
+import be.ehb.gdt.jrivia.models.Clue
 
 class QuestionAdapter(private val context: Context, private val clues: List<Clue>) :
     RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
@@ -26,8 +25,11 @@ class QuestionAdapter(private val context: Context, private val clues: List<Clue
             val bgColor =
                 if (clue.isCorrect()) R.color.primaryLightColor else R.color.secondaryLightColor
             view.setBackgroundColor(getColor(context, bgColor))
-            playersAnswerLabelTextView.isGone = clue.isCorrect()
-            playersAnswerTextView.isGone = clue.isCorrect()
+
+            val playersAnswerVisibility = if (clue.isCorrect()) View.GONE else View.VISIBLE
+            playersAnswerLabelTextView.visibility = playersAnswerVisibility
+            playersAnswerTextView.visibility = playersAnswerVisibility
+
             questionTextView.text = clue.question
             answerTextView.text = clue.answer
             playersAnswerTextView.text = clue.guess

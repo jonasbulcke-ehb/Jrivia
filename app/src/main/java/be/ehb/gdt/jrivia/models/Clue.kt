@@ -1,0 +1,51 @@
+package be.ehb.gdt.jrivia.models
+
+import android.os.Parcel
+import android.os.Parcelable
+import android.util.Log
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+data class Clue(
+    val id: Int,
+    val question: String,
+    val answer: String,
+    val value: Int = 100
+): Parcelable {
+    var guess: String? = ""
+
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readInt()
+    ) {
+        guess = parcel.readString()
+    }
+
+    override fun toString() = "{id:${id},question:${question},answer:${answer},value:${value}"
+
+    fun isCorrect(): Boolean = answer == guess
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(id)
+        parcel.writeString(question)
+        parcel.writeString(answer)
+        parcel.writeInt(value)
+        parcel.writeString(guess)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Clue> {
+        override fun createFromParcel(parcel: Parcel): Clue {
+            return Clue(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Clue?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
