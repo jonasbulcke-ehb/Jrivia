@@ -13,6 +13,7 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+        <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
     </style>
 
 
@@ -29,6 +30,14 @@
     <style name="Theme.Jrivia.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/CustomAlertDialogButtonStyle</item>
+    </style>
+
+    <style name="CustomAlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/secondaryColor</item>
     </style>
 
     <style name="Theme.Jrivia.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

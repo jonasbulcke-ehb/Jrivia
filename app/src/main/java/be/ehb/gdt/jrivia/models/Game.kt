@@ -1,42 +1,50 @@
 package be.ehb.gdt.jrivia.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import java.util.*
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
+import android.os.Parcel
+import android.os.Parcelable
+import java.util.concurrent.TimeUnit
 
-data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Comparable<Game> {
-    private var startTime: Date? = null
-    private var endTime: Date? = null
-
-
-
-    val time: Long? =
-        startTime?.time?.seconds?.let { endTime?.time?.seconds?.minus(it)?.inWholeSeconds }
-
-    val score = clues.filter { it.isCorrect() }.sumOf { it.value }
-
-    fun start() {
-        if (startTime == null) {
-            startTime = Calendar.getInstance().time
+data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Comparable<Game>,
+    Parcelable {
+    var time: Long = 0
+    val formattedTime
+        get(): String {
+            val minutes = TimeUnit.MILLISECONDS.toMinutes(time)
+            val seconds = TimeUnit.MILLISECONDS.toSeconds(time) - minutes * 60
+            return String.format("%02d:%02d", minutes, seconds)
         }
+
+
+    val score get() = clues.filter { it.isCorrect() }.sumOf { it.value }
+
+    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Clue)!!, parcel.readInt()) {
+        time = parcel.readLong()
     }
 
-    fun finish() {
-        if (endTime == null) {
-            endTime = Calendar.getInstance().time
-        }
-    }
 
     override fun compareTo(other: Game): Int {
         val scoreCompared = this.score.compareTo(other.score)
-        return if (scoreCompared == 0) other.time?.let { this.time?.compareTo(it) }
-            ?: 0 else scoreCompared
+        return if (scoreCompared == 0) other.time.let { this.time.compareTo(it) } else scoreCompared
 
     }
 
-//    companion object {
-//        const val NUMBER_OF_QUESTIONS = 10
-//    }
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeTypedList(clues)
+        parcel.writeInt(numberOfQuestions)
+        parcel.writeLong(time)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Game> {
+        override fun createFromParcel(parcel: Parcel): Game {
+            return Game(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Game?> {
+            return arrayOfNulls(size)
+        }
+    }
 }

@@ -16,12 +16,17 @@
         android:theme="@style/Theme.Jrivia"
         tools:targetApi="31">
         <activity
+            android:name=".activities.QuestionOverviewActivity"
+            android:exported="false"
+            android:parentActivityName=".activities.GameOverviewActivity" />
+        <activity
             android:name=".activities.GameOverviewActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".activities.GameActivity"
-            android:noHistory="true"
-            android:exported="false" />
+            android:exported="false"
+            android:noHistory="true" />
         <activity
             android:name=".activities.GameLoadingActivity"
             android:exported="false"

@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
 
-class GameOverviewActivity : AppCompatActivity() {
+class QuestionOverviewActivity : AppCompatActivity() {
     private val gameViewModel: GameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game_overview)
+        setContentView(R.layout.activity_question_overview)
 
         try {
             gameViewModel.game = intent.getParcelableExtra(GameActivity.GAME)
@@ -21,4 +21,6 @@ class GameOverviewActivity : AppCompatActivity() {
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
     }
+
+
 }

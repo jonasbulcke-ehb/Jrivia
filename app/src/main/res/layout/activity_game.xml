@@ -22,20 +22,19 @@
         android:layout_marginHorizontal="16dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@id/timerTextView"
+        app:layout_constraintBaseline_toBaselineOf="@id/chronometer"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Question 1" />
 
-    <TextView
-        android:id="@+id/timerTextView"
+    <Chronometer
+        android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/questionsProgressIndicator"
-        tools:text="00:00" />
+        app:layout_constraintTop_toTopOf="@id/questionsProgressIndicator" />
 
     <TextView
         android:id="@+id/gameQuestionTextView"
@@ -56,8 +55,10 @@
         android:layout_marginHorizontal="16dp"
         android:imeOptions="actionNext"
         android:inputType="text"
+        android:minHeight="48dp"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/gameQuestionTextView"
+        tools:layout_editor_absoluteX="16dp"
         tools:text="corn" />
 
     <LinearLayout

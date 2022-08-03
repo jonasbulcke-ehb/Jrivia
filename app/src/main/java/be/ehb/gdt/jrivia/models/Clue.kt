@@ -2,9 +2,6 @@ package be.ehb.gdt.jrivia.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 data class Clue(
     val id: Int,
@@ -25,7 +22,7 @@ data class Clue(
 
     override fun toString() = "{id:${id},question:${question},answer:${answer},value:${value}"
 
-    fun isCorrect(): Boolean = answer == guess
+    fun isCorrect(): Boolean = answer.lowercase() == guess?.lowercase()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

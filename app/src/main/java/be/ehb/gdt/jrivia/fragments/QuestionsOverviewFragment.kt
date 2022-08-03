@@ -5,28 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import be.ehb.gdt.jrivia.R
+import androidx.fragment.app.activityViewModels
+import be.ehb.gdt.jrivia.adapters.QuestionAdapter
+import be.ehb.gdt.jrivia.databinding.FragmentQuestionsOverviewBinding
+import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [QuestionsOverviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class QuestionsOverviewFragment : Fragment() {
+    private var _binding: FragmentQuestionsOverviewBinding? = null
+    private val binding get() = _binding!!
+    private val gameViewModel: GameViewModel by activityViewModels()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_questions_overview, container, false)
+    ): View {
+        _binding = FragmentQuestionsOverviewBinding.inflate(inflater, container, false)
+
+        binding.questionsRecyclerView.adapter = QuestionAdapter(requireContext(), gameViewModel.game.clues)
+        binding.questionsRecyclerView.setHasFixedSize(true)
+
+        return binding.root
     }
 
 

@@ -15,7 +15,7 @@
     <string name="go_back">Ga terug</string>
     <string name="game_start_error">Er ging iets verkeerd tijdens het opstarten van het spel</string>
     <string name="finish">Voltooi</string>
-    <string name="overview">Overzicht</string>
+    <string name="results">Resultaten</string>
     <string name="score">Score</string>
     <string name="time">Tijd</string>
     <string name="view_questions">Toon vragen</string>
@@ -24,7 +24,9 @@
     <string name="correct_questions">Correcte vragen</string>
     <string name="menu">Menu</string>
     <string name="press_again_to_exit">Druk nogmaals op terug om af te sluiten</string>
-
-
-
+    <string name="warning_message_end_game">Dit zal dit huidige spel beëindigen en je zult de voortgang ervan verliezen</string>
+    <string name="warning_title_end_game">Beëindig spel?</string>
+    <string name="end">Beëindig</string>
+    <string name="cancel">Annuleer</string>
+    <string name="number_of_questions">Aantal vragen: %1$d</string>
 </resources>

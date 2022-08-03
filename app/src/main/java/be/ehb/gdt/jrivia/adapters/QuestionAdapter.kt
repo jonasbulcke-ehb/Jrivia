@@ -25,6 +25,7 @@ class QuestionAdapter(private val context: Context, private val clues: List<Clue
             val bgColor =
                 if (clue.isCorrect()) R.color.primaryLightColor else R.color.secondaryLightColor
             view.setBackgroundColor(getColor(context, bgColor))
+            view.background.alpha = 80
 
             val playersAnswerVisibility = if (clue.isCorrect()) View.GONE else View.VISIBLE
             playersAnswerLabelTextView.visibility = playersAnswerVisibility

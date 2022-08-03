@@ -1,15 +1,13 @@
 package be.ehb.gdt.jrivia.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameLoadingBinding
 import be.ehb.gdt.jrivia.models.Clue
-import be.ehb.gdt.jrivia.models.Game
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -32,10 +30,9 @@ class GameLoadingActivity : AppCompatActivity() {
         binding = ActivityGameLoadingBinding.inflate(layoutInflater)
         val view = binding.root
 
-        binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
-        binding.numberOfQuestionsSlider.addOnChangeListener { slider, value, fromUser ->
+        binding.numberOfQuestionsSlider.addOnChangeListener { _, value, _ ->
             numberOfQuestions = value.toInt()
-            binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
+            updateView()
             scope.launch { fetchGame() }
         }
         binding.startButton.setOnClickListener {
@@ -86,6 +83,12 @@ class GameLoadingActivity : AppCompatActivity() {
             })
             queue.add(stringRequest)
         }
+    }
+
+
+    fun updateView() {
+        binding.numberOfQuestionsLabelTextView.text = getString(R.string.number_of_questions, numberOfQuestions)
+        binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
     }
 
     companion object {

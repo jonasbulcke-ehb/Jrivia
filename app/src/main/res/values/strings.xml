@@ -16,7 +16,7 @@
     <string name="go_back">Go back</string>
     <string name="game_start_error">Something went wrong while trying to start the game</string>
     <string name="finish">Finish</string>
-    <string name="overview">Overview</string>
+    <string name="results">Results</string>
     <string name="score">Score</string>
     <string name="time">Time</string>
     <string name="view_questions">View questions</string>
@@ -25,6 +25,10 @@
     <string name="correct_questions">Correct Questions</string>
     <string name="menu">Menu</string>
     <string name="press_again_to_exit">Press back again to exit</string>
-
+    <string name="warning_message_end_game">This will end this current game and you will lose its progress.</string>
+    <string name="warning_title_end_game">End game?</string>
+    <string name="end">End</string>
+    <string name="cancel">Cancel</string>
+    <string name="number_of_questions">Number of questions: %1$d</string>
 
 </resources>

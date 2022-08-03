@@ -1,11 +1,13 @@
 package be.ehb.gdt.jrivia.activities
 
+import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.os.SystemClock
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameBinding
@@ -25,6 +27,7 @@ class GameActivity : AppCompatActivity() {
 
         setContentView(view)
 
+        // change behavior of the enter button of the keyboard
         binding.answerEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_NEXT -> {
@@ -36,11 +39,14 @@ class GameActivity : AppCompatActivity() {
         }
         binding.nextButton.setOnClickListener { onNextClick() }
         binding.backButton.setOnClickListener { onBackClick() }
+        binding.chronometer.setTextColor(binding.questionNumberTextView.currentTextColor)
 
 
+        // data from intents
         val clues =
             intent.getParcelableArrayExtra(GameLoadingActivity.EXTRA_CLUES)?.map { it as Clue }
         val numberOfQuestions = intent.getIntExtra(GameLoadingActivity.NUMBER_OF_QUESTIONS, -1)
+
 
         if (clues == null || numberOfQuestions == -1) {
             Snackbar.make(
@@ -51,10 +57,12 @@ class GameActivity : AppCompatActivity() {
                 .setAction(R.string.go_back) { finish() }
                 .setActionTextColor(ContextCompat.getColor(this, R.color.secondaryLightColor))
                 .show()
+
         } else {
             val game = Game(clues, numberOfQuestions)
             gameViewModel.game = game
-            gameViewModel.game.start()
+            binding.chronometer.base = SystemClock.elapsedRealtime()
+            binding.chronometer.start()
         }
 
         updateView()
@@ -66,13 +74,16 @@ class GameActivity : AppCompatActivity() {
             gameViewModel.moveNext()
             updateView()
         } else {
-            gameViewModel.game.finish()
-//            finish()
+            gameViewModel.game.time = SystemClock.elapsedRealtime() - binding.chronometer.base
             Intent(this, GameOverviewActivity::class.java)
+                .apply {
+                    putExtra(GAME, gameViewModel.game)
+                }
                 .also { startActivity(it) }
         }
     }
 
+    /** back button from the game itself */
     private fun onBackClick() {
         gameViewModel.currentClue.guess = binding.answerEditText.text.trim().toString()
         gameViewModel.moveBack()
@@ -92,8 +103,30 @@ class GameActivity : AppCompatActivity() {
         binding.backButton.isEnabled = gameViewModel.index > 0
     }
 
+    /** back button of the system */
     override fun onBackPressed() {
-        super.onBackPressed()
-        Log.d("BACK", "onBackPressed invoked")
+        // stop the chronometer
+        binding.chronometer.stop()
+        gameViewModel.pauseOffSet = SystemClock.elapsedRealtime() - binding.chronometer.base
+
+        val alertDialog: AlertDialog = this.let {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage(R.string.warning_message_end_game)
+                .setTitle(R.string.warning_title_end_game)
+                .setPositiveButton(R.string.end) { _, _ -> super.onBackPressed() }
+                .setNegativeButton(R.string.cancel) { dialog: DialogInterface?, _ ->
+                    dialog?.cancel()
+                    binding.chronometer.base =
+                        SystemClock.elapsedRealtime() - gameViewModel.pauseOffSet
+                    binding.chronometer.start()
+                }
+
+            builder.create()
+        }
+        alertDialog.show()
+    }
+
+    companion object {
+        const val GAME = "be.gdt.jrivia.activities.GameActivity.GAME"
     }
 }
