@@ -38,7 +38,7 @@
             android:text="@string/multiplayer" />
 
         <Button
-            android:id="@+id/leaderboardButton"
+            android:id="@+id/homeScoreboardButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/scoreboard" />

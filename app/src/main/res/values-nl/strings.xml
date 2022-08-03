@@ -15,4 +15,16 @@
     <string name="go_back">Ga terug</string>
     <string name="game_start_error">Er ging iets verkeerd tijdens het opstarten van het spel</string>
     <string name="finish">Voltooi</string>
+    <string name="overview">Overzicht</string>
+    <string name="score">Score</string>
+    <string name="time">Tijd</string>
+    <string name="view_questions">Toon vragen</string>
+    <string name="play_again">Speel opnieuw</string>
+    <string name="total_questions">Totaal vragen</string>
+    <string name="correct_questions">Correcte vragen</string>
+    <string name="menu">Menu</string>
+    <string name="press_again_to_exit">Druk nogmaals op terug om af te sluiten</string>
+
+
+
 </resources>

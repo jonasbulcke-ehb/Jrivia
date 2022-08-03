@@ -6,9 +6,11 @@ import java.util.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-data class Game(val clues: List<Clue>) : Comparable<Game> {
+data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Comparable<Game> {
     private var startTime: Date? = null
     private var endTime: Date? = null
+
+
 
     val time: Long? =
         startTime?.time?.seconds?.let { endTime?.time?.seconds?.minus(it)?.inWholeSeconds }
@@ -21,7 +23,7 @@ data class Game(val clues: List<Clue>) : Comparable<Game> {
         }
     }
 
-    fun end() {
+    fun finish() {
         if (endTime == null) {
             endTime = Calendar.getInstance().time
         }
@@ -34,7 +36,7 @@ data class Game(val clues: List<Clue>) : Comparable<Game> {
 
     }
 
-    companion object {
-        const val NUMBER_OF_QUESTIONS = 15
-    }
+//    companion object {
+//        const val NUMBER_OF_QUESTIONS = 10
+//    }
 }

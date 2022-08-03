@@ -13,7 +13,7 @@ class GameViewModel : ViewModel() {
         get() = game.clues[index]
 
     fun moveNext() {
-        if (index < Game.NUMBER_OF_QUESTIONS)
+        if (index < game.numberOfQuestions)
             index++
 
     }

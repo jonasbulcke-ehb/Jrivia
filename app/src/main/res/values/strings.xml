@@ -16,6 +16,15 @@
     <string name="go_back">Go back</string>
     <string name="game_start_error">Something went wrong while trying to start the game</string>
     <string name="finish">Finish</string>
+    <string name="overview">Overview</string>
+    <string name="score">Score</string>
+    <string name="time">Time</string>
+    <string name="view_questions">View questions</string>
+    <string name="play_again">Play again</string>
+    <string name="total_questions">Total Questions</string>
+    <string name="correct_questions">Correct Questions</string>
+    <string name="menu">Menu</string>
+    <string name="press_again_to_exit">Press back again to exit</string>
 
 
 </resources>

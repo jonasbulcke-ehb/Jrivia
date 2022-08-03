@@ -1,5 +1,6 @@
 package be.ehb.gdt.jrivia.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -39,8 +40,9 @@ class GameActivity : AppCompatActivity() {
 
         val clues =
             intent.getParcelableArrayExtra(GameLoadingActivity.EXTRA_CLUES)?.map { it as Clue }
+        val numberOfQuestions = intent.getIntExtra(GameLoadingActivity.NUMBER_OF_QUESTIONS, -1)
 
-        if (clues == null) {
+        if (clues == null || numberOfQuestions == -1) {
             Snackbar.make(
                 findViewById(R.id.gameLayout),
                 getString(R.string.game_start_error),
@@ -50,24 +52,29 @@ class GameActivity : AppCompatActivity() {
                 .setActionTextColor(ContextCompat.getColor(this, R.color.secondaryLightColor))
                 .show()
         } else {
-            val game = Game(clues)
+            val game = Game(clues, numberOfQuestions)
             gameViewModel.game = game
+            gameViewModel.game.start()
         }
 
         updateView()
     }
 
     private fun onNextClick() {
-        if (gameViewModel.index < Game.NUMBER_OF_QUESTIONS) {
-            gameViewModel.currentClue.guess = binding.answerEditText.text.trim().toString()
+        gameViewModel.currentClue.guess = binding.answerEditText.text.trim().toString()
+        if (gameViewModel.index < gameViewModel.game.numberOfQuestions - 1) {
             gameViewModel.moveNext()
             updateView()
         } else {
-            TODO()
+            gameViewModel.game.finish()
+//            finish()
+            Intent(this, GameOverviewActivity::class.java)
+                .also { startActivity(it) }
         }
     }
 
     private fun onBackClick() {
+        gameViewModel.currentClue.guess = binding.answerEditText.text.trim().toString()
         gameViewModel.moveBack()
         updateView()
     }
@@ -78,10 +85,15 @@ class GameActivity : AppCompatActivity() {
         binding.gameQuestionTextView.text = gameViewModel.currentClue.question
         binding.answerEditText.setText(gameViewModel.currentClue.guess ?: "")
         binding.questionsProgressIndicator.progress =
-            ((gameViewModel.index.toDouble() / Game.NUMBER_OF_QUESTIONS) * 100).toInt()
+            ((gameViewModel.index.toDouble() / gameViewModel.game.numberOfQuestions) * 100).toInt()
         binding.nextButton.text =
-            if (gameViewModel.index >= Game.NUMBER_OF_QUESTIONS - 1) getString(R.string.finish)
+            if (gameViewModel.index >= gameViewModel.game.numberOfQuestions - 1) getString(R.string.finish)
             else getString(R.string.next)
         binding.backButton.isEnabled = gameViewModel.index > 0
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d("BACK", "onBackPressed invoked")
     }
 }

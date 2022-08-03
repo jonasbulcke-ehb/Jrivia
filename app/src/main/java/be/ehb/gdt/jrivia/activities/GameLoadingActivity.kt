@@ -24,7 +24,7 @@ class GameLoadingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameLoadingBinding
     private lateinit var clues: Array<Clue>
     private val scope = MainScope()
-    lateinit var coordinatorLayout: CoordinatorLayout
+    var numberOfQuestions = 10
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +32,17 @@ class GameLoadingActivity : AppCompatActivity() {
         binding = ActivityGameLoadingBinding.inflate(layoutInflater)
         val view = binding.root
 
-        scope.launch { fetchGame() }
-
-        binding.explanationTextView.text = getString(R.string.explanation, Game.NUMBER_OF_QUESTIONS)
+        binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
+        binding.numberOfQuestionsSlider.addOnChangeListener { slider, value, fromUser ->
+            numberOfQuestions = value.toInt()
+            binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
+            scope.launch { fetchGame() }
+        }
         binding.startButton.setOnClickListener {
             Intent(this, GameActivity::class.java)
                 .apply {
                     putExtra(EXTRA_CLUES, clues)
+                    putExtra(NUMBER_OF_QUESTIONS, numberOfQuestions)
                 }.also {
                     startActivity(it)
                 }
@@ -47,9 +51,19 @@ class GameLoadingActivity : AppCompatActivity() {
         setContentView(view)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        binding.numberOfQuestionsSlider.value = numberOfQuestions.toFloat()
+
+        scope.launch { fetchGame() }
+    }
+
     private suspend fun fetchGame() {
+        binding.startButton.visibility = View.INVISIBLE
+        binding.questionLoaderProgressIndicator.visibility = View.VISIBLE
         withContext(Dispatchers.IO) {
-            val url = "https://jservice.io/api/random?count=${Game.NUMBER_OF_QUESTIONS}"
+            val url = "https://jservice.io/api/random?count=${numberOfQuestions}"
             val queue = Volley.newRequestQueue(this@GameLoadingActivity)
             val stringRequest = StringRequest(Request.Method.GET, url, {
                 clues = Gson().fromJson(it, Array<Clue>::class.java)
@@ -75,6 +89,7 @@ class GameLoadingActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val EXTRA_CLUES = "be.ehb.gdt.jrivia.GameLoadingActivity"
+        const val EXTRA_CLUES = "be.ehb.gdt.jrivia.GameLoadingActivity.EXTRA_CLUES"
+        const val NUMBER_OF_QUESTIONS = "be.ehb.gdt.jrivia.GameLoadingActivity.NUMBER_OF_QUESTIONS"
     }
 }
