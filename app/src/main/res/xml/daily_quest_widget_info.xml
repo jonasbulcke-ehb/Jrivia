@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
 
-    android:description="@string/app_widget_description"
     android:initialKeyguardLayout="@layout/daily_quest_widget"
     android:initialLayout="@layout/daily_quest_widget"
     android:minWidth="250dp"
@@ -14,3 +13,5 @@
     android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen"
     tools:targetApi="jelly_bean_mr1" />
+
+<!-- you deleted description -->

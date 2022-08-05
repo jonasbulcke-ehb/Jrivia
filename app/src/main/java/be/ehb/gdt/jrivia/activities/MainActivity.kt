@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         calendar.timeInMillis = System.currentTimeMillis()
 
         val intent = Intent(applicationContext, DailyClueFetchService::class.java)
-        PendingIntent.getService(this, 0, intent, 0)
+        PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
             .also {
                 alarmManager.setRepeating(
                     AlarmManager.RTC_WAKEUP,
