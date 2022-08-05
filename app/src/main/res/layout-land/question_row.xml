@@ -26,8 +26,9 @@
         android:text="@string/value"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTextView" />
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintEnd_toStartOf="@id/valueTextView"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/valueTextView"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@id/valueLabelTextView"
-        app:layout_constraintStart_toStartOf="@id/answerGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="100" />
 
     <TextView
@@ -47,7 +48,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/valueLabelTextView" />
+        app:layout_constraintTop_toBottomOf="@id/questionTextView" />
 
 
     <TextView
@@ -66,7 +67,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.33" />
+        app:layout_constraintGuide_percent="0.20" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/valueStartGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/valueGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70" />
 
 
     <TextView

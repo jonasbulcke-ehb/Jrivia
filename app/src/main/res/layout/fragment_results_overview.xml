@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resultsOverviewFragmentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".fragments.ResultsOverviewFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/overviewStatisticsGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".5" />
+
+    <TextView
+        android:id="@+id/scoreLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/gameOverviewScoreTextView"
+        app:layout_constraintStart_toStartOf="@id/gameOverviewScoreTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gameOverviewScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/overviewStatisticsGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scoreLabelTextView"
+        tools:text="1250" />
+
+    <TextView
+        android:id="@+id/timeLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/scoreLabelTextView"
+        app:layout_constraintEnd_toEndOf="@id/gameOverviewTimeTextView"
+        app:layout_constraintStart_toStartOf="@id/gameOverviewTimeTextView" />
+
+    <TextView
+        android:id="@+id/gameOverviewTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/gameOverviewScoreTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/overviewStatisticsGuideline"
+        tools:text="02:43" />
+
+    <Space
+        android:id="@+id/gameoverviewSpace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@id/gameOverviewScoreTextView" />
+
+    <TextView
+        android:id="@+id/correctQuestionsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/correct_questions"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@id/gameOverviewCorrectQuestionsTextView"
+        app:layout_constraintStart_toStartOf="@id/gameOverviewCorrectQuestionsTextView"
+        app:layout_constraintTop_toBottomOf="@id/gameoverviewSpace" />
+
+    <TextView
+        android:id="@+id/gameOverviewCorrectQuestionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/overviewStatisticsGuideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/correctQuestionsLabelTextView"
+        tools:text="10" />
+
+    <TextView
+        android:id="@+id/totalQuestionsLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/total_questions"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/correctQuestionsLabelTextView"
+        app:layout_constraintEnd_toEndOf="@id/gameOverviewTotalQuestionsTextView"
+        app:layout_constraintStart_toStartOf="@id/gameOverviewTotalQuestionsTextView" />
+
+    <TextView
+        android:id="@+id/gameOverviewTotalQuestionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@id/gameOverviewCorrectQuestionsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/overviewStatisticsGuideline"
+        tools:text="15" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

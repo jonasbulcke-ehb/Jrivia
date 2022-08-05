@@ -29,6 +29,17 @@
     <string name="warning_title_end_game">End game?</string>
     <string name="end">End</string>
     <string name="cancel">Cancel</string>
-    <string name="number_of_questions">Number of questions: %1$d</string>
+    <string name="number_of_questions">Number of questions</string>
+    <string name="value">Value:</string>
+    <string name="number_of_questions_with_number">%1$d Questions</string>
+    <string name="minus_sign" translatable="false">-</string>
+    <string name="plus_sign" translatable="false">+</string>
+    <string name="show_all">Show all</string>
+    <string name="show_per_number">Show per number</string>
+    <string name="all">All</string>
+    <string name="per_number">Per number</string>
+    <string name="username">Username</string>
+    <string name="total">Total</string>
+
 
 </resources>

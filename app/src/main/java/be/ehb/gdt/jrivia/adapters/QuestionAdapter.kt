@@ -15,6 +15,7 @@ class QuestionAdapter(private val context: Context, private val clues: List<Clue
 
     class QuestionViewHolder(private val context: Context, private val view: View) :
         RecyclerView.ViewHolder(view) {
+        private val valueTextView: TextView = view.findViewById(R.id.valueTextView)
         private val questionTextView: TextView = view.findViewById(R.id.questionTextView)
         private val answerTextView: TextView = view.findViewById(R.id.answerTextView)
         private val playersAnswerLabelTextView: TextView =
@@ -31,6 +32,7 @@ class QuestionAdapter(private val context: Context, private val clues: List<Clue
             playersAnswerLabelTextView.visibility = playersAnswerVisibility
             playersAnswerTextView.visibility = playersAnswerVisibility
 
+            valueTextView.text = clue.value.toString()
             questionTextView.text = clue.question
             answerTextView.text = clue.answer
             playersAnswerTextView.text = clue.guess

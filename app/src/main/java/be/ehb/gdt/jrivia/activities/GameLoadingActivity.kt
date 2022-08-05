@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameLoadingBinding
 import be.ehb.gdt.jrivia.models.Clue
+import be.ehb.gdt.jrivia.models.Game
+import be.ehb.gdt.jrivia.util.IntentExtraNames
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -20,9 +23,8 @@ import kotlinx.coroutines.withContext
 
 class GameLoadingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameLoadingBinding
-    private lateinit var clues: Array<Clue>
     private val scope = MainScope()
-    var numberOfQuestions = 10
+    private val game = Game(ArrayList(), "")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,18 +33,23 @@ class GameLoadingActivity : AppCompatActivity() {
         val view = binding.root
 
         binding.numberOfQuestionsSlider.addOnChangeListener { _, value, _ ->
-            numberOfQuestions = value.toInt()
+            game.numberOfQuestions = value.toInt()
             updateView()
             scope.launch { fetchGame() }
         }
+
         binding.startButton.setOnClickListener {
             Intent(this, GameActivity::class.java)
                 .apply {
-                    putExtra(EXTRA_CLUES, clues)
-                    putExtra(NUMBER_OF_QUESTIONS, numberOfQuestions)
+                    putExtra(IntentExtraNames.GAME, game)
                 }.also {
                     startActivity(it)
                 }
+        }
+
+        binding.usernameEditText.addTextChangedListener {
+            binding.startButton.isEnabled = binding.usernameEditText.text.isNotBlank()
+            game.username = binding.usernameEditText.text.trim().toString()
         }
 
         setContentView(view)
@@ -51,7 +58,7 @@ class GameLoadingActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        binding.numberOfQuestionsSlider.value = numberOfQuestions.toFloat()
+        binding.numberOfQuestionsSlider.value = game.numberOfQuestions.toFloat()
 
         scope.launch { fetchGame() }
     }
@@ -60,10 +67,10 @@ class GameLoadingActivity : AppCompatActivity() {
         binding.startButton.visibility = View.INVISIBLE
         binding.questionLoaderProgressIndicator.visibility = View.VISIBLE
         withContext(Dispatchers.IO) {
-            val url = "https://jservice.io/api/random?count=${numberOfQuestions}"
+            val url = "https://jservice.io/api/random?count=${game.numberOfQuestions}"
             val queue = Volley.newRequestQueue(this@GameLoadingActivity)
             val stringRequest = StringRequest(Request.Method.GET, url, {
-                clues = Gson().fromJson(it, Array<Clue>::class.java)
+                game.clues = Gson().fromJson(it, Array<Clue>::class.java).toList()
                 binding.questionLoaderProgressIndicator.visibility = View.GONE
                 binding.startButton.visibility = View.VISIBLE
             }, {
@@ -78,21 +85,14 @@ class GameLoadingActivity : AppCompatActivity() {
                 }
                     .setActionTextColor(ContextCompat.getColor(this@GameLoadingActivity, R.color.secondaryLightColor))
                     .show()
-
-
             })
             queue.add(stringRequest)
         }
     }
 
 
-    fun updateView() {
-        binding.numberOfQuestionsLabelTextView.text = getString(R.string.number_of_questions, numberOfQuestions)
-        binding.explanationTextView.text = getString(R.string.explanation, numberOfQuestions)
-    }
-
-    companion object {
-        const val EXTRA_CLUES = "be.ehb.gdt.jrivia.GameLoadingActivity.EXTRA_CLUES"
-        const val NUMBER_OF_QUESTIONS = "be.ehb.gdt.jrivia.GameLoadingActivity.NUMBER_OF_QUESTIONS"
+    private fun updateView() {
+        binding.numberOfQuestionsLabelTextView.text = getString(R.string.number_of_questions_with_number, game.numberOfQuestions)
+        binding.explanationTextView.text = getString(R.string.explanation, game.numberOfQuestions)
     }
 }

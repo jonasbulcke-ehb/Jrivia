@@ -6,10 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activities.GameOverviewActivity">
 
+    <TextView
+        android:id="@+id/overviewLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="36sp"
+        android:text="@string/results"
+        android:textSize="54sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/gameStatisticsFragmentContainerView"
+        android:id="@+id/resultsOverviewFragmentContainer"
+        android:name="be.ehb.gdt.jrivia.fragments.ResultsOverviewFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="be.ehb.gdt.jrivia.fragments.GameStatisticsFragment"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/resultsButtonFragmentContainerView"
+        app:layout_constraintTop_toBottomOf="@id/overviewLabelTextView" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/resultsButtonFragmentContainerView"
+        android:name="be.ehb.gdt.jrivia.fragments.ResultsButtonsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

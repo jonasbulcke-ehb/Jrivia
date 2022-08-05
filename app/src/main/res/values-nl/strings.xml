@@ -28,5 +28,13 @@
     <string name="warning_title_end_game">Beëindig spel?</string>
     <string name="end">Beëindig</string>
     <string name="cancel">Annuleer</string>
-    <string name="number_of_questions">Aantal vragen: %1$d</string>
+    <string name="number_of_questions">Aantal vragen</string>
+    <string name="value">Waarde:</string>
+    <string name="number_of_questions_with_number">%1$d Vragen</string>
+    <string name="show_all">Toon alle</string>
+    <string name="show_per_number">Toon per aantal</string>
+    <string name="all">Alle</string>
+    <string name="per_number">Per aantal</string>
+    <string name="username">Gebruikersnaam</string>
+    <string name="total">Totaal</string>
 </resources>

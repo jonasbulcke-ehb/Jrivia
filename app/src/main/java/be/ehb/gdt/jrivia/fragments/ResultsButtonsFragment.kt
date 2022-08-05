@@ -7,33 +7,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import be.ehb.gdt.jrivia.activities.GameActivity
 import be.ehb.gdt.jrivia.activities.MainActivity
 import be.ehb.gdt.jrivia.activities.QuestionOverviewActivity
-import be.ehb.gdt.jrivia.databinding.FragmentGameStatisticsBinding
+import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
+import be.ehb.gdt.jrivia.databinding.FragmentResultsButtonsBinding
 import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.util.IntentExtraNames
 
-
-class GameStatisticsFragment : Fragment() {
-    private var _binding: FragmentGameStatisticsBinding? = null
+class ResultsButtonsFragment : Fragment() {
+    private var _binding: FragmentResultsButtonsBinding? = null
     private val binding get() = _binding!!
     private val gameViewModel: GameViewModel by activityViewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGameStatisticsBinding.inflate(inflater, container, false)
+        _binding = FragmentResultsButtonsBinding.inflate(inflater, container, false)
 
         val view = binding.root
-
-        binding.gameOverviewCorrectQuestionsTextView.text =
-            gameViewModel.game.clues.count { it.isCorrect() }.toString()
-        binding.gameOverviewTotalQuestionsTextView.text =
-            gameViewModel.game.numberOfQuestions.toString()
-        binding.gameOverviewTimeTextView.text = gameViewModel.game.formattedTime
-        binding.gameOverviewScoreTextView.text = gameViewModel.game.score.toString()
 
         binding.playAgainButton.setOnClickListener { activity?.finish() }
         binding.menuButton.setOnClickListener {
@@ -43,15 +35,21 @@ class GameStatisticsFragment : Fragment() {
         }
         binding.viewQuestionsButton.setOnClickListener {
             Intent(context, QuestionOverviewActivity::class.java)
-                .apply { putExtra(GameActivity.GAME, gameViewModel.game) }
+                .apply { putExtra(IntentExtraNames.GAME, gameViewModel.game) }
+                .also { startActivity(it) }
+        }
+
+        binding.overviewScoreboardButton.setOnClickListener {
+            Intent(context, ScoreBoardActivity::class.java)
+                .apply {
+                    putExtra(
+                        IntentExtraNames.NUMBER_OF_QUESTIONS,
+                        gameViewModel.game.numberOfQuestions
+                    )
+                }
                 .also { startActivity(it) }
         }
 
         return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

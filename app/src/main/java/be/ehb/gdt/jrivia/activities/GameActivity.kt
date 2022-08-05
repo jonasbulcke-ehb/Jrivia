@@ -9,16 +9,23 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import be.ehb.gdt.jrivia.JriviaApplication
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameBinding
-import be.ehb.gdt.jrivia.models.Clue
 import be.ehb.gdt.jrivia.models.Game
+import be.ehb.gdt.jrivia.models.Score
 import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModel
+import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModelFactory
+import be.ehb.gdt.jrivia.util.IntentExtraNames
 import com.google.android.material.snackbar.Snackbar
 
 class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private val gameViewModel: GameViewModel by viewModels()
+    private val scoreViewModel: ScoreViewModel by viewModels {
+        ScoreViewModelFactory((application as JriviaApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +50,10 @@ class GameActivity : AppCompatActivity() {
 
 
         // data from intents
-        val clues =
-            intent.getParcelableArrayExtra(GameLoadingActivity.EXTRA_CLUES)?.map { it as Clue }
-        val numberOfQuestions = intent.getIntExtra(GameLoadingActivity.NUMBER_OF_QUESTIONS, -1)
+        val game: Game? = intent.getParcelableExtra(IntentExtraNames.GAME)
 
 
-        if (clues == null || numberOfQuestions == -1) {
+        if (game == null) {
             Snackbar.make(
                 findViewById(R.id.gameLayout),
                 getString(R.string.game_start_error),
@@ -59,7 +64,6 @@ class GameActivity : AppCompatActivity() {
                 .show()
 
         } else {
-            val game = Game(clues, numberOfQuestions)
             gameViewModel.game = game
             binding.chronometer.base = SystemClock.elapsedRealtime()
             binding.chronometer.start()
@@ -75,9 +79,10 @@ class GameActivity : AppCompatActivity() {
             updateView()
         } else {
             gameViewModel.game.time = SystemClock.elapsedRealtime() - binding.chronometer.base
+            scoreViewModel.insert(Score(gameViewModel.game))
             Intent(this, GameOverviewActivity::class.java)
                 .apply {
-                    putExtra(GAME, gameViewModel.game)
+                    putExtra(IntentExtraNames.GAME, gameViewModel.game)
                 }
                 .also { startActivity(it) }
         }
@@ -124,9 +129,5 @@ class GameActivity : AppCompatActivity() {
             builder.create()
         }
         alertDialog.show()
-    }
-
-    companion object {
-        const val GAME = "be.gdt.jrivia.activities.GameActivity.GAME"
     }
 }

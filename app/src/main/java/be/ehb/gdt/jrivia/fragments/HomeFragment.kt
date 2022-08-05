@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import be.ehb.gdt.jrivia.activities.GameLoadingActivity
+import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
 import be.ehb.gdt.jrivia.databinding.FragmentHomeBinding
 
 
@@ -23,7 +24,13 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
         binding.singlePlayerButton.setOnClickListener {
-            startActivity(Intent(context, GameLoadingActivity::class.java))
+            Intent(context, GameLoadingActivity::class.java)
+                .also { startActivity(it) }
+        }
+
+        binding.homeScoreboardButton.setOnClickListener {
+            Intent(context, ScoreBoardActivity::class.java)
+                .also { startActivity(it) }
         }
 
         return view

@@ -4,7 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.util.concurrent.TimeUnit
 
-data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Comparable<Game>,
+data class Game(var clues: List<Clue>, var username: String, var numberOfQuestions: Int = 10) :
+    Comparable<Game>,
     Parcelable {
     var time: Long = 0
     val formattedTime
@@ -16,8 +17,13 @@ data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Compar
 
 
     val score get() = clues.filter { it.isCorrect() }.sumOf { it.value }
+    val correctQuestions get() = clues.filter { it.isCorrect() }.count()
 
-    constructor(parcel: Parcel) : this(parcel.createTypedArrayList(Clue)!!, parcel.readInt()) {
+    constructor(parcel: Parcel) : this(
+        parcel.createTypedArrayList(Clue)!!,
+        parcel.readString()!!,
+        parcel.readInt()
+    ) {
         time = parcel.readLong()
     }
 
@@ -30,6 +36,7 @@ data class Game(val clues: List<Clue>, var numberOfQuestions: Int = 10) : Compar
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(clues)
+        parcel.writeString(username)
         parcel.writeInt(numberOfQuestions)
         parcel.writeLong(time)
     }
