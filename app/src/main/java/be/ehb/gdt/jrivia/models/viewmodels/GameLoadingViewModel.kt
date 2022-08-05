@@ -1,6 +1,5 @@
 package be.ehb.gdt.jrivia.models.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import be.ehb.gdt.jrivia.models.Clue
 import be.ehb.gdt.jrivia.retrofit.JServiceCallService
@@ -34,8 +33,6 @@ class GameLoadingViewModel : ViewModel() {
         cluesCall.enqueue(
             object : Callback<List<Clue>> {
                 override fun onResponse(call: Call<List<Clue>>, response: Response<List<Clue>>) {
-                    Log.d("LIST", call.request().url().toString())
-                    Log.d("LIST", response.body()?.size.toString())
                     if (response.code() == 200) {
                         clues = response.body()!!
                         updateViewOnSuccess.run()
