@@ -8,7 +8,7 @@ data class Clue(
     val question: String,
     val answer: String,
     val value: Int = 100
-): Parcelable {
+) : Parcelable {
     var guess: String? = ""
 
     constructor(parcel: Parcel) : this(

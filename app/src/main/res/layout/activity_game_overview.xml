@@ -14,6 +14,7 @@
         android:text="@string/results"
         android:textSize="54sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/resultsOverviewFragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +33,7 @@
         android:name="be.ehb.gdt.jrivia.fragments.ResultsButtonsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/resultsOverviewFragmentContainer"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

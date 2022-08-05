@@ -40,6 +40,7 @@
     <string name="per_number">Per number</string>
     <string name="username">Username</string>
     <string name="total">Total</string>
-
-
+    <string name="daily_quest">Daily Quest</string>
+    <string name="solve_daily_quest">Solve daily quest</string>
+    <string name="view_quests_of_last_month">View quests of last month</string>
 </resources>

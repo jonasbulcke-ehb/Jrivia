@@ -16,7 +16,7 @@ data class Game(var clues: List<Clue>, var username: String, var numberOfQuestio
 
 
     val score get() = clues.filter { it.isCorrect() }.sumOf { it.value }
-    val correctQuestions get() = clues.filter { it.isCorrect() }.count()
+    val correctQuestions get() = clues.count { it.isCorrect() }
 
     constructor(parcel: Parcel) : this(
         parcel.createTypedArrayList(Clue)!!,

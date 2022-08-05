@@ -17,7 +17,7 @@ import be.ehb.gdt.jrivia.util.IntentExtraNames
 
 class ScoreBoardActivity : AppCompatActivity() {
     private val scoreViewModel: ScoreViewModel by viewModels {
-        ScoreViewModelFactory((application as JriviaApplication).repository)
+        ScoreViewModelFactory((application as JriviaApplication).scoreRepository)
     }
     private lateinit var binding: ActivityScoreBoardBinding
     private val adapter = ScoreListAdapter()

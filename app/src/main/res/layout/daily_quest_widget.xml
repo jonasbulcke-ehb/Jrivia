@@ -1,0 +1,27 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Jrivia.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.Jrivia.AppWidgetContainer">
+
+    <TextView
+        android:id="@+id/widgetDailyLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/daily_quest"
+        android:text="@string/daily_quest"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/widgetDailyTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
+        tools:text="What was the name of the very first president of the U.S.A.?"
+        app:layout_constraintTop_toBottomOf="@id/widgetDailyLabelTextView"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

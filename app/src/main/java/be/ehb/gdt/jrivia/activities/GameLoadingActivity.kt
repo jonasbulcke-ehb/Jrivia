@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameLoadingBinding
-import be.ehb.gdt.jrivia.models.Clue
 import be.ehb.gdt.jrivia.models.Game
 import be.ehb.gdt.jrivia.models.viewmodels.GameLoadingViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames

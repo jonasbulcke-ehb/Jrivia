@@ -5,15 +5,24 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import be.ehb.gdt.jrivia.R
+import be.ehb.gdt.jrivia.adapters.QuestionAdapter
+import be.ehb.gdt.jrivia.databinding.ActivityQuestionsOverviewBinding
 import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 
-class QuestionOverviewActivity : AppCompatActivity() {
+class QuestionsOverviewActivity : AppCompatActivity() {
     private val gameViewModel: GameViewModel by viewModels()
+    private lateinit var binding: ActivityQuestionsOverviewBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_question_overview)
+
+        binding = ActivityQuestionsOverviewBinding.inflate(layoutInflater)
+
+        binding.questionsRecyclerView.adapter = QuestionAdapter(this, gameViewModel.game.clues)
+        binding.questionsRecyclerView.setHasFixedSize(true)
+
+        setContentView(binding.root)
 
         try {
             gameViewModel.game = intent.getParcelableExtra(IntentExtraNames.GAME)

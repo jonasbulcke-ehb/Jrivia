@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import be.ehb.gdt.jrivia.activities.MainActivity
-import be.ehb.gdt.jrivia.activities.QuestionOverviewActivity
+import be.ehb.gdt.jrivia.activities.QuestionsOverviewActivity
 import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
 import be.ehb.gdt.jrivia.databinding.FragmentResultsButtonsBinding
 import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
@@ -34,7 +34,7 @@ class ResultsButtonsFragment : Fragment() {
                 .also { startActivity(it) }
         }
         binding.viewQuestionsButton.setOnClickListener {
-            Intent(context, QuestionOverviewActivity::class.java)
+            Intent(context, QuestionsOverviewActivity::class.java)
                 .apply { putExtra(IntentExtraNames.GAME, gameViewModel.game) }
                 .also { startActivity(it) }
         }

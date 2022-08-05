@@ -24,7 +24,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private val gameViewModel: GameViewModel by viewModels()
     private val scoreViewModel: ScoreViewModel by viewModels {
-        ScoreViewModelFactory((application as JriviaApplication).repository)
+        ScoreViewModelFactory((application as JriviaApplication).scoreRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

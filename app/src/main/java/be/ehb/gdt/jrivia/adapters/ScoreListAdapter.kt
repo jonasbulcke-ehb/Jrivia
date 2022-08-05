@@ -14,7 +14,7 @@ import be.ehb.gdt.jrivia.models.Score
 
 class ScoreListAdapter : ListAdapter<Score, ScoreListAdapter.ScoreViewHolder>(ScoreComparator()), ScoreBoardActivity.NoticeShowAllListener {
     private var showAll = false
-    var holders = ArrayList<ScoreViewHolder>()
+    private val holders = ArrayList<ScoreViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
         val holder =  ScoreViewHolder.create(parent)

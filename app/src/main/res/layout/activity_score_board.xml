@@ -29,6 +29,7 @@
             android:id="@+id/questionsLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:textAlignment="center"
             android:textColor="@color/primaryColor"
             android:textSize="18sp"
@@ -78,7 +79,8 @@
             android:text="@string/score"
             android:textAlignment="textEnd"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="end" />
 
         <Space
             android:layout_width="0dp"
@@ -92,7 +94,8 @@
             android:text="@string/time"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:layout_width="0dp"
@@ -101,7 +104,8 @@
             android:text="@string/correct"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
 
         <TextView
             android:id="@+id/scoresHeaderTotalTextView"
@@ -111,7 +115,8 @@
             android:text="@string/total"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
