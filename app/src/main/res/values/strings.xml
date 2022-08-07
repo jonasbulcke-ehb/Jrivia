@@ -47,4 +47,8 @@
     <string name="delete">Delete</string>
     <string name="score_deletion_warning">This score will be deleted permanently and cannot be restored.</string>
     <string name="delete_selected_score">Delete selected score?</string>
+    <string name="info">Info</string>
+    <string name="score_explanation_all">The scores are ranked by the score value, time, total number of questions and number of the correct solved questions</string>
+    <string name="score_explanation_per_number">The scores are ranked by the score value, time and number of the correct solved questions</string>
+    <string name="ok">OK</string>
 </resources>

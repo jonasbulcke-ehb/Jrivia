@@ -44,4 +44,8 @@
     <string name="delete">Verwijder</string>
     <string name="score_deletion_warning">Deze score zal permanent verwijderd zijn en kan niet meer hersteld worden.</string>
     <string name="delete_selected_score">Verwijder geselecteerde score?</string>
+    <string name="info">Info</string>
+    <string name="score_explanation_all">De scores worden gerangschikt op basis van de scorewaarde, de tijd, het totaal aantal vragen en het aantal correct opgeloste vragen</string>
+    <string name="score_explanation_per_number">De scores worden gerangschikt op basis van de scorewaarde, tijd en het aantal correct opgeloste vragen</string>
+    <string name="ok">OK</string>
 </resources>

@@ -1,5 +1,6 @@
 package be.ehb.gdt.jrivia.activities
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -7,9 +8,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import be.ehb.gdt.jrivia.JriviaApplication
@@ -21,6 +22,7 @@ import be.ehb.gdt.jrivia.models.Score
 import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModel
 import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModelFactory
 import be.ehb.gdt.jrivia.util.IntentExtraNames
+import com.google.android.material.snackbar.Snackbar
 
 class ScoreBoardActivity : AppCompatActivity(),
     ConfirmScoreDeletionDialogFragment.ConfirmScoreDeletionDialogListener {
@@ -122,8 +124,6 @@ class ScoreBoardActivity : AppCompatActivity(),
                     }
                 }
         }
-//        adapter.listeners.forEach { it.onShowAllChanged(scoreViewModel.showAll) }
-//        adapter.listener.onShowAllChanged(scoreViewModel.showAll)
     }
 
     private fun onNumberChangeButtonClicked(view: View) {
@@ -143,6 +143,16 @@ class ScoreBoardActivity : AppCompatActivity(),
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_score_info -> {
+            val explanationResId = if(scoreViewModel.showAll) R.string.score_explanation_all else R.string.score_explanation_per_number
+            AlertDialog.Builder(this)
+                .setMessage(getString(explanationResId))
+                .setTitle("Explanation")
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create().show()
+
+            true
+        }
         R.id.action_show_all -> {
             scoreViewModel.showAll = !scoreViewModel.showAll
             adapter.onShowAllChanged(scoreViewModel.showAll)
@@ -161,7 +171,7 @@ class ScoreBoardActivity : AppCompatActivity(),
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-         selectedScore?.let { scoreViewModel.delete(it); Log.d("DELETE", "SUCCESS") }
+        selectedScore?.let { scoreViewModel.delete(it); Log.d("DELETE", "SUCCESS") }
     }
 
     override fun onDialogDismiss() {
