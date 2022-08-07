@@ -8,3 +8,5 @@ https://www.youtube.com/watch?v=gaPoV4z5wng => retrofit
 
 https://stackoverflow.com/questions/13228843/should-i-use-alarmmanager-or-handler
 https://stackoverflow.com/questions/6425611/android-run-a-task-periodically
+
+https://www.geeksforgeeks.org/how-to-use-material-contextual-actionbar-library-in-android-app/

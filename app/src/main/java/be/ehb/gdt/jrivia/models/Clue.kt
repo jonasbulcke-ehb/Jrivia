@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class Clue(
     val id: Int,
     val question: String,
-    val answer: String,
+    var answer: String,
     val value: Int = 100
 ) : Parcelable {
     var guess: String? = ""

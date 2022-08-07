@@ -43,4 +43,8 @@
     <string name="daily_quest">Daily Quest</string>
     <string name="solve_daily_quest">Solve daily quest</string>
     <string name="view_quests_of_last_month">View quests of last month</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="score_deletion_warning">This score will be deleted permanently and cannot be restored.</string>
+    <string name="delete_selected_score">Delete selected score?</string>
 </resources>

@@ -37,8 +37,11 @@
     <string name="per_number">Per aantal</string>
     <string name="username">Gebruikersnaam</string>
     <string name="total">Totaal</string>
-
     <string name="daily_quest">Dagelijke queste</string>
     <string name="solve_daily_quest">Los dagelijke queste op</string>
     <string name="view_quests_of_last_month">Toon questes van afgelopen maand</string>
+    <string name="share">Deel</string>
+    <string name="delete">Verwijder</string>
+    <string name="score_deletion_warning">Deze score zal permanent verwijderd zijn en kan niet meer hersteld worden.</string>
+    <string name="delete_selected_score">Verwijder geselecteerde score?</string>
 </resources>

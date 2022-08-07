@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
+import kotlin.streams.toList
 
 class GameLoadingViewModel : ViewModel() {
     var username: String = ""
@@ -24,8 +25,13 @@ class GameLoadingViewModel : ViewModel() {
             object : Callback<List<Clue>> {
                 override fun onResponse(call: Call<List<Clue>>, response: Response<List<Clue>>) {
                     if (response.code() == 200) {
-                        @Suppress("UNCHECKED_CAST")
+//                        @Suppress("UNCHECKED_CAST")
                         clues = response.body()!!
+                        clues.forEach {
+                            if(it.answer.contains("<i>")) {
+                                it.answer = it.answer.replace("<i>", "").replace("</i>", "")
+                            }
+                        }
                         updateViewOnSuccess.run()
                     } else updateViewOnFailure.run()
                 }

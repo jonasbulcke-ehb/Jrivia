@@ -17,19 +17,19 @@ class QuestionsOverviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityQuestionsOverviewBinding.inflate(layoutInflater)
-
-        binding.questionsRecyclerView.adapter = QuestionAdapter(this, gameViewModel.game.clues)
-        binding.questionsRecyclerView.setHasFixedSize(true)
-
-        setContentView(binding.root)
-
         try {
             gameViewModel.game = intent.getParcelableExtra(IntentExtraNames.GAME)
                 ?: throw IllegalStateException("Something went wrong while trying to finish the game")
         } catch (e: IllegalStateException) {
             Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
         }
+
+        binding = ActivityQuestionsOverviewBinding.inflate(layoutInflater)
+
+        binding.questionsRecyclerView.adapter = QuestionAdapter(this, gameViewModel.game.clues)
+        binding.questionsRecyclerView.setHasFixedSize(true)
+
+        setContentView(binding.root)
     }
 
 

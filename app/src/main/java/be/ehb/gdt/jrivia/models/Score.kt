@@ -55,4 +55,8 @@ data class Score(
         result = 31 * result + totalNumberOfQuestions
         return result
     }
+
+    override fun toString(): String {
+        return "$username scored $value and answered $correctNumberOfQuestions out of $totalNumberOfQuestions correctly in $formattedTime "
+    }
 }
