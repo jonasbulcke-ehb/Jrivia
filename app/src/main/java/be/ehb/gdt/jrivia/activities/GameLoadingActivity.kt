@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 
 class GameLoadingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameLoadingBinding
-    private val scope = MainScope()
     private val loadingViewModel: GameLoadingViewModel by viewModels()
 
 
@@ -30,10 +29,22 @@ class GameLoadingActivity : AppCompatActivity() {
         binding.numberOfQuestionsSlider.addOnChangeListener { _, value, _ ->
             loadingViewModel.numberOfQuestions = value.toInt()
             updateView()
-            scope.launch { fetchGame() }
+            fetchGame()
         }
 
+        binding.usernameEditText.apply {
+            addTextChangedListener {
+                binding.startButton.isEnabled = isUsernameValid()
+                loadingViewModel.username = binding.usernameEditText.text.trim().toString()
+            }
+            setText(loadingViewModel.username)
+        }
+
+        binding.startButton.apply {
+            isEnabled = isUsernameValid()
+        }
         binding.startButton.setOnClickListener {
+            loadingViewModel.saveUsername()
             Intent(this, GameActivity::class.java)
                 .apply {
                     val game = Game(
@@ -47,20 +58,18 @@ class GameLoadingActivity : AppCompatActivity() {
                 }
         }
 
-        binding.usernameEditText.addTextChangedListener {
-            binding.startButton.isEnabled = binding.usernameEditText.text.isNotBlank()
-            loadingViewModel.username = binding.usernameEditText.text.trim().toString()
-        }
-
         setContentView(view)
     }
 
+    private fun isUsernameValid(): Boolean {
+        return binding.usernameEditText.text.isNotBlank()
+    }
+
+    // this method is overridden, so when the user come back at this loading activity, a new game is fetched
     override fun onResume() {
         super.onResume()
-
         binding.numberOfQuestionsSlider.value = loadingViewModel.numberOfQuestions.toFloat()
-
-        scope.launch { fetchGame() }
+        fetchGame()
     }
 
     private fun onSuccess() {
@@ -69,13 +78,18 @@ class GameLoadingActivity : AppCompatActivity() {
     }
 
     private fun onFailure() {
-        binding.questionLoaderProgressIndicator.isIndeterminate = false
-        binding.questionLoaderProgressIndicator.progress = 99
+        binding.questionLoaderProgressIndicator.apply {
+            isIndeterminate = false
+            progress = 99
+
+        }
+
         Snackbar.make(
             findViewById(R.id.loadingLayout),
             R.string.error_clues_fetching,
             Snackbar.LENGTH_INDEFINITE
-        ).setAction(R.string.go_back) { finish() }
+        )
+            .setAction(R.string.go_back) { finish() }
             .setActionTextColor(
                 ContextCompat.getColor(
                     this@GameLoadingActivity, R.color.secondaryLightColor
@@ -84,7 +98,7 @@ class GameLoadingActivity : AppCompatActivity() {
             .show()
     }
 
-    private suspend fun fetchGame() {
+    private fun fetchGame() {
         binding.startButton.visibility = View.INVISIBLE
         binding.questionLoaderProgressIndicator.visibility = View.VISIBLE
 

@@ -4,16 +4,13 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
-import android.widget.CalendarView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import be.ehb.gdt.jrivia.JriviaApplication
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityMainBinding
-import be.ehb.gdt.jrivia.room.DailyClueRepository
-import be.ehb.gdt.jrivia.services.DailyClueFetchService
+import be.ehb.gdt.jrivia.services.DailyQuestFetchService
 import java.util.*
 
 
@@ -36,6 +33,11 @@ class MainActivity : AppCompatActivity() {
                 .also { startActivity(it) }
         }
 
+        binding.dailyQuestsButton.setOnClickListener {
+            Intent(this, DailyQuestsActivity::class.java)
+                .also { startActivity(it) }
+        }
+
         setContentView(binding.root)
 
         val alarmManager: AlarmManager =
@@ -43,16 +45,18 @@ class MainActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
 
-        val intent = Intent(applicationContext, DailyClueFetchService::class.java)
-        PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-            .also {
-                alarmManager.setRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    24 * 60 * 60 * 1000,
-                    it
-                )
-            }
+        val intent = Intent(applicationContext, DailyQuestFetchService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                .also {
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        calendar.timeInMillis,
+                        24 * 60 * 60 * 1000,
+                        it
+                    )
+                }
+        }
 
 
     }

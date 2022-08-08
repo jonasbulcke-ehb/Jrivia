@@ -2,7 +2,7 @@ package be.ehb.gdt.jrivia.models.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import be.ehb.gdt.jrivia.room.DailyClueRepository
+import be.ehb.gdt.jrivia.room.DailyQuestRepository
 import be.ehb.gdt.jrivia.room.ScoreRepository
 
 class ScoreViewModelFactory(private val scoreRepository: ScoreRepository) :
@@ -16,12 +16,12 @@ class ScoreViewModelFactory(private val scoreRepository: ScoreRepository) :
     }
 }
 
-class DailyClueViewModelFactory(private val dailyClueRepository: DailyClueRepository) :
+class DailyClueViewModelFactory(private val dailyQuestRepository: DailyQuestRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DailyClueViewModel::class.java))
+        if (modelClass.isAssignableFrom(DailyQuestViewModel::class.java))
             @Suppress("UNCHECKED_CAST")
-            return DailyClueViewModel(dailyClueRepository) as T
+            return DailyQuestViewModel(dailyQuestRepository) as T
 
         throw IllegalArgumentException("Unknown ViewModel class")
     }

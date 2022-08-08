@@ -26,8 +26,10 @@ class QuestionsOverviewActivity : AppCompatActivity() {
 
         binding = ActivityQuestionsOverviewBinding.inflate(layoutInflater)
 
-        binding.questionsRecyclerView.adapter = QuestionAdapter(this, gameViewModel.game.clues)
-        binding.questionsRecyclerView.setHasFixedSize(true)
+        binding.questionsRecyclerView.apply {
+            adapter = QuestionAdapter(gameViewModel.game.clues, this@QuestionsOverviewActivity)
+            setHasFixedSize(true)
+        }
 
         setContentView(binding.root)
     }

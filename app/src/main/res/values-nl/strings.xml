@@ -37,7 +37,7 @@
     <string name="per_number">Per aantal</string>
     <string name="username">Gebruikersnaam</string>
     <string name="total">Totaal</string>
-    <string name="daily_quest">Dagelijke queste</string>
+    <string name="daily_quest">Dagelijkse queste</string>
     <string name="solve_daily_quest">Los dagelijke queste op</string>
     <string name="view_quests_of_last_month">Toon questes van afgelopen maand</string>
     <string name="share">Deel</string>
@@ -48,4 +48,14 @@
     <string name="score_explanation_all">De scores worden gerangschikt op basis van de scorewaarde, de tijd, het totaal aantal vragen en het aantal correct opgeloste vragen</string>
     <string name="score_explanation_per_number">De scores worden gerangschikt op basis van de scorewaarde, tijd en het aantal correct opgeloste vragen</string>
     <string name="ok">OK</string>
+    <string name="daily_quests">Dagelijkse questes</string>
+    <string name="minus_button">Min knop</string>
+    <string name="plus_button">Plus knop</string>
+    <string name="daily_quest_solved">Dagelijkse queste opgelost</string>
+    <plurals name="solved_in_guesses">
+        <item quantity="one">Opgelost in %1$d poging</item>
+        <item quantity="other">Opgelost in %1$d pogingen</item>
+    </plurals>
+    <string name="clue_to_string">%1$s heeft %2$d gescoord en %3$d op %4$d juist beantwoord in %5$s</string>
+
 </resources>

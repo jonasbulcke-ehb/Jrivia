@@ -51,4 +51,17 @@
     <string name="score_explanation_all">The scores are ranked by the score value, time, total number of questions and number of the correct solved questions</string>
     <string name="score_explanation_per_number">The scores are ranked by the score value, time and number of the correct solved questions</string>
     <string name="ok">OK</string>
+    <string name="daily_quests">Daily quests</string>
+    <string name="minus_button">Minus button</string>
+    <string name="plus_button">Plus button</string>
+    <string name="daily_quest_solved">Daily quest solved</string>
+    <plurals name="solved_in_guesses">
+        <item quantity="one">Solved in %1$d guess</item>
+        <item quantity="other">Solved in %1$d guesses</item>
+    </plurals>
+    <string-array name="daily_quest_tab_names">
+        <item>Today</item>
+        <item>History</item>
+    </string-array>
+    <string name="clue_to_string">%1$s has scored %2$d and answered %3$d out of %4$d correctly in %5$s</string>
 </resources>

@@ -1,7 +1,9 @@
 package be.ehb.gdt.jrivia.models
 
+import android.content.res.Resources
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import be.ehb.gdt.jrivia.R
 import java.util.concurrent.TimeUnit
 
 @Entity(tableName = "scores")
@@ -57,6 +59,13 @@ data class Score(
     }
 
     override fun toString(): String {
-        return "$username scored $value and answered $correctNumberOfQuestions out of $totalNumberOfQuestions correctly in $formattedTime "
+        return Resources.getSystem().getString(
+            R.string.clue_to_string,
+            username,
+            value,
+            correctNumberOfQuestions,
+            totalNumberOfQuestions,
+            formattedTime
+        )
     }
 }

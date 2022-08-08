@@ -23,7 +23,7 @@ class ResultsOverviewFragment : Fragment() {
         val view = binding.root
 
         binding.gameOverviewCorrectQuestionsTextView.text =
-            gameViewModel.game.clues.count { it.isCorrect() }.toString()
+            gameViewModel.game.clues.count { it.isCorrect }.toString()
         binding.gameOverviewTotalQuestionsTextView.text =
             gameViewModel.game.numberOfQuestions.toString()
         binding.gameOverviewTimeTextView.text = gameViewModel.game.formattedTime

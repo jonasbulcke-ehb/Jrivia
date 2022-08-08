@@ -77,10 +77,10 @@
             android:text="@string/multiplayer" />
 
         <Button
-            android:id="@+id/dailyQuestButton"
+            android:id="@+id/dailyQuestsButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/daily_quest" />
+            android:text="@string/daily_quests" />
 
         <Button
             android:id="@+id/homeScoreboardButton"

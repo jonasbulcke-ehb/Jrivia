@@ -10,6 +10,7 @@ data class Clue(
     val value: Int = 100
 ) : Parcelable {
     var guess: String? = ""
+    val isCorrect get() = answer.lowercase() == guess?.lowercase()
 
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
@@ -22,7 +23,6 @@ data class Clue(
 
     override fun toString() = "{id:${id},question:${question},answer:${answer},value:${value}"
 
-    fun isCorrect(): Boolean = answer.lowercase() == guess?.lowercase()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

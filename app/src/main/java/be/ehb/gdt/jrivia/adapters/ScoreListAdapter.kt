@@ -1,5 +1,6 @@
 package be.ehb.gdt.jrivia.adapters
 
+import android.content.Context
 import android.view.*
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
 import be.ehb.gdt.jrivia.models.Score
-import java.util.function.Function
 
 class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickListener) :
     ListAdapter<Score, ScoreListAdapter.ScoreViewHolder>(ScoreComparator()),
@@ -46,8 +46,6 @@ class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickLis
             correctTextView.text = score.correctNumberOfQuestions.toString()
             totalTextView.text = score.totalNumberOfQuestions.toString()
             view.setOnLongClickListener { onLongScoreClickListener.onScoreLongClick(score)}
-
-
             totalTextView.isVisible = showAll
         }
 
@@ -58,7 +56,7 @@ class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickLis
         companion object {
             fun create(parent: ViewGroup): ScoreViewHolder {
                 val view: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.score_row, parent, false)
+                    .inflate(R.layout.row_score, parent, false)
 
                 return ScoreViewHolder(view)
             }
@@ -80,8 +78,7 @@ class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickLis
         holders.forEach { it.setVisibility(showAll) }
     }
 
-    @FunctionalInterface
-    interface OnScoreLongClickListener {
+    fun interface OnScoreLongClickListener {
         fun onScoreLongClick(score: Score): Boolean
     }
 }

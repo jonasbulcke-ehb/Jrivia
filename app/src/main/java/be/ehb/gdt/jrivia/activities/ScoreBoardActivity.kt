@@ -1,16 +1,15 @@
 package be.ehb.gdt.jrivia.activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import be.ehb.gdt.jrivia.JriviaApplication
@@ -22,7 +21,6 @@ import be.ehb.gdt.jrivia.models.Score
 import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModel
 import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModelFactory
 import be.ehb.gdt.jrivia.util.IntentExtraNames
-import com.google.android.material.snackbar.Snackbar
 
 class ScoreBoardActivity : AppCompatActivity(),
     ConfirmScoreDeletionDialogFragment.ConfirmScoreDeletionDialogListener {
@@ -34,11 +32,7 @@ class ScoreBoardActivity : AppCompatActivity(),
     private var actionMode: ActionMode? = null
     private var selectedScore: Score? = null
 
-    private val adapter = ScoreListAdapter(object : ScoreListAdapter.OnScoreLongClickListener {
-        override fun onScoreLongClick(score: Score): Boolean {
-            return this@ScoreBoardActivity.onScoreLongClick(score)
-        }
-    })
+    private val adapter = ScoreListAdapter { this@ScoreBoardActivity.onScoreLongClick(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,16 +73,22 @@ class ScoreBoardActivity : AppCompatActivity(),
         override fun onActionItemClicked(mode: ActionMode?, menuItem: MenuItem?): Boolean {
             when (menuItem?.itemId) {
                 R.id.action_share -> {
-                    Toast.makeText(
-                        this@ScoreBoardActivity, "Share option selected",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Intent().apply {
+                        action = Intent.ACTION_SEND
+                        putExtra(Intent.EXTRA_TEXT, selectedScore.toString())
+                        type = "text/plain"
+                    }.also {
+                        Intent.createChooser(it, getString(R.string.app_name)).also {
+                            startActivity(it)
+                        }
+                    }
+
                     mode?.finish()
                     return true
                 }
                 R.id.action_delete -> {
-                    val dialog = ConfirmScoreDeletionDialogFragment(this@ScoreBoardActivity)
-                    dialog.show(supportFragmentManager, "ConfirmScoreDeletionDialogFragment")
+                    ConfirmScoreDeletionDialogFragment(this@ScoreBoardActivity)
+                        .show(supportFragmentManager, "ConfirmScoreDeletionDialogFragment")
                     return true
                 }
                 else -> return false
@@ -111,15 +111,15 @@ class ScoreBoardActivity : AppCompatActivity(),
         binding.numberOfQuestionsLayout.isVisible = !scoreViewModel.showAll
 
         if (scoreViewModel.showAll) {
-            scoreViewModel.allScores.observe(this) { scores ->
-                scores?.let {
+            scoreViewModel.allScores.observe(this) {
+                it?.let {
                     adapter.submitList(it)
                 }
             }
         } else {
             scoreViewModel.getScoresByNumberOfQuestions(scoreViewModel.numberOfQuestions)
-                .observe(this) { scores ->
-                    scores?.let {
+                .observe(this) {
+                    it?.let {
                         adapter.submitList(it)
                     }
                 }
@@ -144,7 +144,8 @@ class ScoreBoardActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_score_info -> {
-            val explanationResId = if(scoreViewModel.showAll) R.string.score_explanation_all else R.string.score_explanation_per_number
+            val explanationResId =
+                if (scoreViewModel.showAll) R.string.score_explanation_all else R.string.score_explanation_per_number
             AlertDialog.Builder(this)
                 .setMessage(getString(explanationResId))
                 .setTitle("Explanation")
