@@ -11,7 +11,7 @@ import be.ehb.gdt.jrivia.activities.MainActivity
 import be.ehb.gdt.jrivia.activities.QuestionsOverviewActivity
 import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
 import be.ehb.gdt.jrivia.databinding.FragmentResultsButtonsBinding
-import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.viewmodels.GameViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 
 class ResultsButtonsFragment : Fragment() {

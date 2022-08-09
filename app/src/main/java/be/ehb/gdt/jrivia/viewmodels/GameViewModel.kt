@@ -1,4 +1,4 @@
-package be.ehb.gdt.jrivia.models.viewmodels
+package be.ehb.gdt.jrivia.viewmodels
 
 import androidx.lifecycle.ViewModel
 import be.ehb.gdt.jrivia.models.Clue

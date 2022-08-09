@@ -19,7 +19,7 @@
         android:id="@+id/questionNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="8dp"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@id/chronometer"
@@ -30,7 +30,7 @@
         android:id="@+id/chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,8 +40,7 @@
         android:id="@+id/gameQuestionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
+        android:layout_margin="8dp"
         android:lines="6"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/questionNumberTextView"
@@ -52,40 +51,39 @@
         android:id="@+id/answerEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="8dp"
+        android:hint="@string/answer"
         android:imeOptions="actionNext"
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/gameQuestionTextView"
-        tools:layout_editor_absoluteX="16dp"
         tools:text="corn" />
 
     <LinearLayout
         android:id="@+id/buttonLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_margin="8dp"
         app:layout_constraintTop_toBottomOf="@id/answerEditText">
 
         <Button
             android:id="@+id/backButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:enabled="false"
             android:text="@string/back" />
 
         <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_width="8dp"
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/nextButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:text="@string/next" />
 
     </LinearLayout>

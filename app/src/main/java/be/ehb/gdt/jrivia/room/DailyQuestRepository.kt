@@ -2,14 +2,13 @@ package be.ehb.gdt.jrivia.room
 
 import androidx.annotation.WorkerThread
 import be.ehb.gdt.jrivia.models.DailyQuest
+import kotlinx.coroutines.flow.Flow
 
 class DailyQuestRepository(private val dailyQuestDao: DailyQuestDao) {
 //
-    @WorkerThread
-    suspend fun getLastQuest(): DailyQuest = dailyQuestDao.getLastQuest()
+    fun getLastQuest(): Flow<DailyQuest> = dailyQuestDao.getLastQuest()
 
-    @WorkerThread
-    suspend fun getLastQuests(numberOfQuests: Int = 30): List<DailyQuest> =
+    fun getLastQuests(numberOfQuests: Int = 30): Flow<List<DailyQuest>> =
         dailyQuestDao.getLastQuests(numberOfQuests)
 
     @WorkerThread

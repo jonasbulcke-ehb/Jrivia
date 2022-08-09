@@ -2,6 +2,7 @@ package be.ehb.gdt.jrivia.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +16,11 @@ import be.ehb.gdt.jrivia.models.DailyQuest
 
 class DailyQuestAdapter(
     private val dataset: List<DailyQuest>,
-    val onDailyQuestClickListener: OnDailyQuestClickListener
+    val context: Context,
+    private val onDailyQuestClickListener: OnDailyQuestClickListener
 ) : RecyclerView.Adapter<DailyQuestAdapter.DailyQuestViewHolder>() {
 
-    inner class DailyQuestViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class DailyQuestViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val dateTextView: TextView = view.findViewById(R.id.dateTextView)
         private val solvedInGuessesTextView: TextView =
             view.findViewById(R.id.solvedInGuessesTextView)
@@ -29,15 +31,18 @@ class DailyQuestAdapter(
         @SuppressLint("SimpleDateFormat")
         fun bind(dailyQuest: DailyQuest) {
             dateTextView.text = dailyQuest.formattedDate
-            solvedInGuessesTextView.text = Resources.getSystem().getQuantityString(
-                R.plurals.solved_in_guesses,
-                dailyQuest.guesses,
-                dailyQuest.guesses
-            )
-            solvedInGuessesTextView.isVisible = dailyQuest.isSolved
+            solvedInGuessesTextView.apply {
+                text =
+                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                        dailyQuest.guesses.toString()
+                    else
+                        resources.getQuantityString(
+                            R.plurals.guesses, dailyQuest.guesses, dailyQuest.guesses
+                        )
+                isVisible = dailyQuest.isSolved
+            }
             isSolvedCheckBox.isChecked = dailyQuest.isSolved
             questionTextView.text = dailyQuest.question
-            view.setOnClickListener { onDailyQuestClickListener.onDailyQuestClick(dailyQuest) }
         }
     }
 
@@ -49,11 +54,12 @@ class DailyQuestAdapter(
 
     override fun onBindViewHolder(holder: DailyQuestViewHolder, position: Int) {
         holder.bind(dataset[position])
+        holder.itemView.setOnClickListener { onDailyQuestClickListener.onDailyQuestClick(position) }
     }
 
     override fun getItemCount() = dataset.size
 
     fun interface OnDailyQuestClickListener {
-        fun onDailyQuestClick(dailyQuest: DailyQuest)
+        fun onDailyQuestClick(position: Int)
     }
 }

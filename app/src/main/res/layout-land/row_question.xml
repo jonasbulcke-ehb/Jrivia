@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
-    android:layout_marginVertical="4dp"
+    android:layout_marginTop="8dp"
     android:orientation="vertical"
     android:padding="8dp">
 
@@ -23,12 +23,12 @@
         android:id="@+id/valueLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:text="@string/value"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginHorizontal="8dp"
-        app:layout_constraintEnd_toStartOf="@id/valueTextView"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/valueTextView" />
 
     <TextView
         android:id="@+id/valueTextView"
@@ -43,7 +43,7 @@
         android:id="@+id/answerLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/answer"
+        android:text="@string/answer_label"
         android:textColor="@color/primaryDarkColor"
         android:textSize="18sp"
         android:textStyle="bold"

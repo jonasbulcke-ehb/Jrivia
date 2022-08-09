@@ -3,7 +3,6 @@ package be.ehb.gdt.jrivia.activities
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,8 +17,8 @@ import be.ehb.gdt.jrivia.adapters.ScoreListAdapter
 import be.ehb.gdt.jrivia.databinding.ActivityScoreBoardBinding
 import be.ehb.gdt.jrivia.fragments.ConfirmScoreDeletionDialogFragment
 import be.ehb.gdt.jrivia.models.Score
-import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModel
-import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModelFactory
+import be.ehb.gdt.jrivia.viewmodels.ScoreViewModel
+import be.ehb.gdt.jrivia.viewmodels.ScoreViewModelFactory
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 
 class ScoreBoardActivity : AppCompatActivity(),
@@ -172,7 +171,7 @@ class ScoreBoardActivity : AppCompatActivity(),
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        selectedScore?.let { scoreViewModel.delete(it); Log.d("DELETE", "SUCCESS") }
+        selectedScore?.let { scoreViewModel.delete(it) }
     }
 
     override fun onDialogDismiss() {

@@ -1,29 +1,21 @@
-package be.ehb.gdt.jrivia.models.viewmodels
+package be.ehb.gdt.jrivia.viewmodels
 
 import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.models.Clue
 import be.ehb.gdt.jrivia.retrofit.RetrofitUtil
-import be.ehb.gdt.jrivia.util.IntentExtraNames
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import kotlin.collections.ArrayList
-import kotlin.streams.toList
 
 class GameLoadingViewModel(application: Application) : AndroidViewModel(application) {
-    private val context = application.applicationContext
-
     private val sharedPref =
-        context.getSharedPreferences(PREFERENCE_USERNAME_KEY, Context.MODE_PRIVATE)
+        application.applicationContext.getSharedPreferences(PREFERENCE_USERNAME_KEY, Context.MODE_PRIVATE)
     var username: String = sharedPref.getString(USERNAME_KEY, "")!!
     var numberOfQuestions = 10
     var clues: List<Clue> = ArrayList()
@@ -61,7 +53,6 @@ class GameLoadingViewModel(application: Application) : AndroidViewModel(applicat
     fun saveUsername() {
         with(sharedPref.edit()) {
             putString(USERNAME_KEY, username)
-            Log.d(USERNAME_KEY, username)
             apply()
         }
     }

@@ -1,7 +1,6 @@
 package be.ehb.gdt.jrivia.room
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -51,7 +50,6 @@ abstract class JriviaRoomDatabase : RoomDatabase() {
             val quest = DailyQuest(1,"It recently moved ahead of Chicago to become our 2nd largest", "Los Angeles", 100)
             quest.dateInMillis = System.currentTimeMillis() - 24 * 60 * 60 * 1000
             dao.insertQuest(quest)
-            Log.d("COUNT", "SUCCEEDED")
         }
     }
 }

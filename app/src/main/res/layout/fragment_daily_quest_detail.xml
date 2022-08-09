@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    tools:context=".fragments.DailyQuestDetailFragment">
+
+    <TextView
+        android:id="@+id/solvedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAllCaps="true"
+        android:textColor="@color/primaryColor"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="solved" />
+
+    <TextView
+        android:id="@+id/dailyQuestDetailQuestionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingVertical="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/guessesTextview"
+        tools:text="What was the name of the very first president of the U.S.A." />
+
+    <TextView
+        android:id="@+id/detail_answer_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/dailyQuestDetailQuestionTextView"
+        tools:text="George Washington" />
+
+    <TextView
+        android:id="@+id/guessesTextview"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="end"
+        android:textAllCaps="true"
+        android:textColor="@color/primaryColor"
+        app:layout_constraintEnd_toEndOf="@id/solvedTextView"
+        app:layout_constraintStart_toStartOf="@id/solvedTextView"
+        app:layout_constraintTop_toBottomOf="@id/solvedTextView"
+        tools:ignore="UnusedAttribute"
+        tools:text="in 20 guesses" />
+
+    <TextView
+        android:id="@+id/pointsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="400" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:text="@string/points"
+        android:textAllCaps="true"
+        app:layout_constraintBaseline_toBaselineOf="@id/pointsTextView"
+        app:layout_constraintStart_toEndOf="@id/pointsTextView"
+        tools:ignore="UnusedAttribute" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -9,7 +9,8 @@
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="question_number">Question %1$d</string>
-    <string name="answer">Answer:</string>
+    <string name="answer_label">Answer:</string>
+    <string name="answer">Answer</string>
     <string name="correct">Correct</string>
     <string name="your_answer">Your answer:</string>
     <string name="error_clues_fetching">Something went wrong while trying to load the game. Try again later</string>
@@ -55,13 +56,37 @@
     <string name="minus_button">Minus button</string>
     <string name="plus_button">Plus button</string>
     <string name="daily_quest_solved">Daily quest solved</string>
-    <plurals name="solved_in_guesses">
-        <item quantity="one">Solved in %1$d guess</item>
-        <item quantity="other">Solved in %1$d guesses</item>
+    <string name="clue_to_string">%1$s has scored %2$d and answered %3$d out of %4$d correctly in %5$s at the Jrivia game</string>
+    <string name="solve">solve</string>
+    <string name="already_solved">Already solved</string>
+    <string name="solved">solved</string>
+    <string name="unsolved">unsolved</string>
+    <string name="have_not_solved_yet">You haven\'t solved today\'s quest yet</string>
+    <string name="have_solved">You have solved today\'s quest!</string>
+    <string name="points">points</string>
+    <string name="solve_and_add_points_button">+ %1$d points</string>
+    <string name="points_earned">%1$d points earned</string>
+    <string name="solved_quests">solved quests</string>
+    <string name="not_available_yet">No daily quest available yet.\nA notification will be sent when there\'s one available.</string>
+
+    <!-- plurals -->
+    <plurals name="in_guesses">
+        <item quantity="one">in 1 guess</item>
+        <item quantity="other">in %1$d guesses</item>
     </plurals>
+    <plurals name="guesses">
+        <item quantity="one">1 guess</item>
+        <item quantity="other">%1$d guesses</item>
+    </plurals>
+    <string name="zero_guesses_already">No guesses yet</string>
+    <plurals name="guesses_already">
+        <item quantity="one">1 guess already</item>
+        <item quantity="other">%1$d guesses already</item>
+    </plurals>
+
+
     <string-array name="daily_quest_tab_names">
         <item>Today</item>
         <item>History</item>
     </string-array>
-    <string name="clue_to_string">%1$s has scored %2$d and answered %3$d out of %4$d correctly in %5$s</string>
 </resources>

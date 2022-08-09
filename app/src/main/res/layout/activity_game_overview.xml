@@ -25,6 +25,7 @@
         android:name="be.ehb.gdt.jrivia.fragments.ResultsOverviewFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@id/resultsButtonFragmentContainerView"
         app:layout_constraintTop_toBottomOf="@id/overviewLabelTextView" />
 
@@ -33,7 +34,8 @@
         android:name="be.ehb.gdt.jrivia.fragments.ResultsButtonsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/resultsOverviewFragmentContainer"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resultsOverviewFragmentContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

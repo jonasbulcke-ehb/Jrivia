@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import be.ehb.gdt.jrivia.R
-import be.ehb.gdt.jrivia.adapters.DailyQuestsStateAdapter
 import be.ehb.gdt.jrivia.databinding.FragmentDailyQuestsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -51,5 +51,12 @@ class DailyQuestsFragment : Fragment() {
         _binding = null
     }
 
+    class DailyQuestsStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+        override fun getItemCount() = 2
 
+        override fun createFragment(position: Int): Fragment {
+            val fragments = listOf(DailyQuestsTodayFragment(), DailyQuestsHistoryFragment())
+            return fragments[position]
+        }
+    }
 }

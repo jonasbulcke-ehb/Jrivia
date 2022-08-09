@@ -1,4 +1,4 @@
-package be.ehb.gdt.jrivia.models.viewmodels
+package be.ehb.gdt.jrivia.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +16,7 @@ class ScoreViewModelFactory(private val scoreRepository: ScoreRepository) :
     }
 }
 
-class DailyClueViewModelFactory(private val dailyQuestRepository: DailyQuestRepository) :
+class DailyQuestViewModelFactory(private val dailyQuestRepository: DailyQuestRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DailyQuestViewModel::class.java))

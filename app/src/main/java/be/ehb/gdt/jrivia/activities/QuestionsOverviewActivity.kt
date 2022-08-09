@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.adapters.QuestionAdapter
 import be.ehb.gdt.jrivia.databinding.ActivityQuestionsOverviewBinding
-import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.viewmodels.GameViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 
 class QuestionsOverviewActivity : AppCompatActivity() {

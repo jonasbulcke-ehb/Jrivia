@@ -8,7 +8,7 @@
     <string name="back">Vorige</string>
     <string name="next">Volgende</string>
     <string name="question_number">Vraag %1$d</string>
-    <string name="answer">Antwoord:</string>
+    <string name="answer_label">Antwoord:</string>
     <string name="correct">Correct</string>
     <string name="your_answer">Jouw antwoord: </string>
     <string name="error_clues_fetching">Er is iets verkeerds gelopen bij het laden van het spel. Probeer later opnieuw</string>
@@ -52,10 +52,38 @@
     <string name="minus_button">Min knop</string>
     <string name="plus_button">Plus knop</string>
     <string name="daily_quest_solved">Dagelijkse queste opgelost</string>
-    <plurals name="solved_in_guesses">
-        <item quantity="one">Opgelost in %1$d poging</item>
-        <item quantity="other">Opgelost in %1$d pogingen</item>
-    </plurals>
     <string name="clue_to_string">%1$s heeft %2$d gescoord en %3$d op %4$d juist beantwoord in %5$s</string>
+    <string name="solve">los op</string>
+    <string name="already_solved">Al opgelost</string>
+    <string name="solved">opgelost</string>
+    <string name="unsolved">onopgelost</string>
+    <string name="have_not_solved_yet">De queste van vandaag is nog niet opgelost</string>
+    <string name="have_solved">Je hebt de queste van vandaag opgelost</string>
+    <string name="points">punten</string>
+    <string name="solve_and_add_points_button">+ %1$d punten</string>
+    <string name="points_earned">%1$d punten verdiend</string>
+    <string name="solved_quests">opgeloste questes</string>
+    <string name="answer">Antwoord</string>
+    <string name="not_available_yet">Nog geen dagelijkse queste beschikbaar.\nEr zal een notificatie verstuurd worden wanneer er een beschikbaar is.</string>
+
+    <!-- plurals -->
+    <plurals name="in_guesses">
+        <item quantity="one">in 1 poging</item>
+        <item quantity="other">in %1$d poging</item>
+    </plurals>
+    <plurals name="guesses">
+        <item quantity="one">1 poging</item>
+        <item quantity="other">%1$d pogingen</item>
+    </plurals>
+    <string name="zero_guesses_already">Nog geen pogingen</string>
+    <plurals name="guesses_already">
+        <item quantity="one">al 1 poging</item>
+        <item quantity="other">al %1$d pogingen</item>
+    </plurals>
+
+    <string-array name="daily_quest_tab_names">
+        <item>Vandaag</item>
+        <item>Geschiedenis</item>
+    </string-array>
 
 </resources>

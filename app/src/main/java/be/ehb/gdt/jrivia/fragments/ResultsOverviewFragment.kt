@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import be.ehb.gdt.jrivia.databinding.FragmentResultsOverviewBinding
-import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.viewmodels.GameViewModel
 
 class ResultsOverviewFragment : Fragment() {
     private var _binding: FragmentResultsOverviewBinding? = null
@@ -20,16 +20,16 @@ class ResultsOverviewFragment : Fragment() {
     ): View {
         _binding = FragmentResultsOverviewBinding.inflate(inflater, container, false)
 
-        val view = binding.root
+        binding.apply {
+            gameOverviewCorrectQuestionsTextView.text =
+                gameViewModel.game.clues.count { it.isCorrect }.toString()
+            gameOverviewTotalQuestionsTextView.text =
+                gameViewModel.game.numberOfQuestions.toString()
+            gameOverviewTimeTextView.text = gameViewModel.game.formattedTime
+            gameOverviewScoreTextView.text = gameViewModel.game.score.toString()
+        }
 
-        binding.gameOverviewCorrectQuestionsTextView.text =
-            gameViewModel.game.clues.count { it.isCorrect }.toString()
-        binding.gameOverviewTotalQuestionsTextView.text =
-            gameViewModel.game.numberOfQuestions.toString()
-        binding.gameOverviewTimeTextView.text = gameViewModel.game.formattedTime
-        binding.gameOverviewScoreTextView.text = gameViewModel.game.score.toString()
-
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {

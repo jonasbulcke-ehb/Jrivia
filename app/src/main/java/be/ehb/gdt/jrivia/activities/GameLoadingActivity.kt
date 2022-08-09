@@ -10,11 +10,9 @@ import androidx.core.widget.addTextChangedListener
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameLoadingBinding
 import be.ehb.gdt.jrivia.models.Game
-import be.ehb.gdt.jrivia.models.viewmodels.GameLoadingViewModel
+import be.ehb.gdt.jrivia.viewmodels.GameLoadingViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 class GameLoadingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameLoadingBinding

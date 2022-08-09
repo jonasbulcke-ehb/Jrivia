@@ -14,9 +14,9 @@ import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.ActivityGameBinding
 import be.ehb.gdt.jrivia.models.Game
 import be.ehb.gdt.jrivia.models.Score
-import be.ehb.gdt.jrivia.models.viewmodels.GameViewModel
-import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModel
-import be.ehb.gdt.jrivia.models.viewmodels.ScoreViewModelFactory
+import be.ehb.gdt.jrivia.viewmodels.GameViewModel
+import be.ehb.gdt.jrivia.viewmodels.ScoreViewModel
+import be.ehb.gdt.jrivia.viewmodels.ScoreViewModelFactory
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 import com.google.android.material.snackbar.Snackbar
 
@@ -96,16 +96,18 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun updateView() {
-        binding.questionNumberTextView.text =
-            getString(R.string.question_number, (gameViewModel.index + 1))
-        binding.gameQuestionTextView.text = gameViewModel.currentClue.question
-        binding.answerEditText.setText(gameViewModel.currentClue.guess ?: "")
-        binding.questionsProgressIndicator.progress =
-            ((gameViewModel.index.toDouble() / gameViewModel.game.numberOfQuestions) * 100).toInt()
-        binding.nextButton.text =
-            if (gameViewModel.index >= gameViewModel.game.numberOfQuestions - 1) getString(R.string.finish)
-            else getString(R.string.next)
-        binding.backButton.isEnabled = gameViewModel.index > 0
+        binding.apply {
+            questionNumberTextView.text =
+                getString(R.string.question_number, (gameViewModel.index + 1))
+            gameQuestionTextView.text = gameViewModel.currentClue.question
+            answerEditText.setText(gameViewModel.currentClue.guess ?: "")
+            questionsProgressIndicator.progress =
+                ((gameViewModel.index.toDouble() / gameViewModel.game.numberOfQuestions) * 100).toInt()
+            nextButton.text =
+                if (gameViewModel.index >= gameViewModel.game.numberOfQuestions - 1) getString(R.string.finish)
+                else getString(R.string.next)
+            backButton.isEnabled = gameViewModel.index > 0
+        }
     }
 
     /** back button of the system */

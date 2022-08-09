@@ -1,17 +1,12 @@
 package be.ehb.gdt.jrivia.models
 
 import android.annotation.SuppressLint
-import android.icu.text.DateFormat
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Log
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 @Entity(tableName = "daily_clues")
 data class DailyQuest(
@@ -36,11 +31,6 @@ data class DailyQuest(
     ) {
         guesses = parcel.readInt()
         isSolved = parcel.readByte() != 0.toByte()
-    }
-
-    init {
-        Log.d("DATE", dateInMillis.toString())
-        Log.d("DATE", question)
     }
 
     fun isFromToday(): Boolean {
