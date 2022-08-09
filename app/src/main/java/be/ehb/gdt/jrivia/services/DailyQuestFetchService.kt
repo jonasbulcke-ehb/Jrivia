@@ -77,7 +77,7 @@ class DailyQuestFetchService : Service() {
                                             applicationContext, "daily_clue"
                                         )
                                             .setSmallIcon(R.drawable.ic_launcher_foreground)
-                                            .setContentTitle("New daily clue available")
+                                            .setContentTitle(getString(R.string.new_quest_available))
                                             .setContentText(lastQuest!!.question)
                                             .setContentIntent(pendingIntent)
                                             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

@@ -33,8 +33,6 @@
     <string name="number_of_questions">Number of questions</string>
     <string name="value">Value:</string>
     <string name="number_of_questions_with_number">%1$d Questions</string>
-    <string name="minus_sign" translatable="false">-</string>
-    <string name="plus_sign" translatable="false">+</string>
     <string name="show_all">Show all</string>
     <string name="show_per_number">Show per number</string>
     <string name="all">All</string>
@@ -68,6 +66,7 @@
     <string name="points_earned">%1$d points earned</string>
     <string name="solved_quests">solved quests</string>
     <string name="not_available_yet">No daily quest available yet.\nA notification will be sent when there\'s one available.</string>
+    <string name="new_quest_available">New daily quest available</string>
 
     <!-- plurals -->
     <plurals name="in_guesses">

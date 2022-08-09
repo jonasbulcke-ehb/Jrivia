@@ -65,6 +65,7 @@
     <string name="solved_quests">opgeloste questes</string>
     <string name="answer">Antwoord</string>
     <string name="not_available_yet">Nog geen dagelijkse queste beschikbaar.\nEr zal een notificatie verstuurd worden wanneer er een beschikbaar is.</string>
+    <string name="new_quest_available">Nieuwe dagelijke queste aanwezig</string>
 
     <!-- plurals -->
     <plurals name="in_guesses">

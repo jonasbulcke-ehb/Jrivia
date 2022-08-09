@@ -29,18 +29,6 @@ class DailyQuestWidget : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         appWidgetIds.forEach {
-            val pendingIntent = PendingIntent.getActivity(
-                context,
-                0,
-                Intent(context, DailyQuestsActivity::class.java),
-                PendingIntent.FLAG_IMMUTABLE
-            )
-
-            RemoteViews(context.packageName, R.layout.widget_daily_quest)
-                .apply {
-                    setOnClickPendingIntent(R.id.widgetLayout, pendingIntent)
-                }
-
             updateAppWidget(context, appWidgetManager, it)
         }
     }
@@ -63,6 +51,13 @@ internal fun updateAppWidget(
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.widget_daily_quest)
 
+    val pendingIntent = PendingIntent.getActivity(
+        context,
+        0,
+        Intent(context, DailyQuestsActivity::class.java),
+        PendingIntent.FLAG_IMMUTABLE
+    )
+
     val repository =
         DailyQuestRepository(
             JriviaRoomDatabase.getDatabase(context, CoroutineScope(Dispatchers.IO)).dailyQuestDao()
@@ -71,6 +66,7 @@ internal fun updateAppWidget(
     repository.getLastQuest().asLiveData().observeForever {
         Log.d("WIDGET", it.question)
         views.setTextViewText(R.id.widgetDailyTextView, it.question)
+//        views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent)
     }
 
     // Instruct the widget manager to update the widget
