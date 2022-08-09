@@ -37,7 +37,7 @@
     <string name="per_number">Per aantal</string>
     <string name="username">Gebruikersnaam</string>
     <string name="total">Totaal</string>
-    <string name="daily_quest">Dagelijkse queste</string>
+    <string name="daily_quest">Jrivia\'s Dagelijkse queste</string>
     <string name="solve_daily_quest">Los dagelijke queste op</string>
     <string name="view_quests_of_last_month">Toon questes van afgelopen maand</string>
     <string name="share">Deel</string>
@@ -52,7 +52,7 @@
     <string name="minus_button">Min knop</string>
     <string name="plus_button">Plus knop</string>
     <string name="daily_quest_solved">Dagelijkse queste opgelost</string>
-    <string name="clue_to_string">%1$s heeft %2$d gescoord en %3$d op %4$d juist beantwoord in %5$s</string>
+    <string name="clue_to_string">%1$s heeft %2$d gescoord en %3$d op %4$d juist beantwoord in %5$ in Jrivia</string>
     <string name="solve">los op</string>
     <string name="already_solved">Al opgelost</string>
     <string name="solved">opgelost</string>
@@ -66,6 +66,12 @@
     <string name="answer">Antwoord</string>
     <string name="not_available_yet">Nog geen dagelijkse queste beschikbaar.\nEr zal een notificatie verstuurd worden wanneer er een beschikbaar is.</string>
     <string name="new_quest_available">Nieuwe dagelijke queste aanwezig</string>
+    <string name="questions_overview">Vragenoverzicht</string>
+    <string name="today_not_available_yet">Queste van vandaag is nog niet beschikbaar</string>
+    <string name="missed_chance">Je hebt je kans gemist</string>
+    <string name="score_selected">Score geselecteerd</string>
+    <string name="explanation">Uitleg</string>
+    <string name="game_overview_error">Er ging iets mis tijdens het proberen afronden van het spel</string>
 
     <!-- plurals -->
     <plurals name="in_guesses">
@@ -86,5 +92,6 @@
         <item>Vandaag</item>
         <item>Geschiedenis</item>
     </string-array>
+    <string name="game_explanation">%1$d Jrivia vragen worden ingeladen. Wanneer je op de knop \"Start Spel\" drukt, begint er een timer te lopen.\nDe tijd heeft geen invloed op de score zelf, maar zal gebruikt worden wanneer twee scores dezelfde zijn.</string>
 
 </resources>

@@ -42,28 +42,29 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        // starts a periodically task to fetch every day a new daily quest
         val alarmManager: AlarmManager =
             applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
 
         val intent = Intent(applicationContext, DailyQuestFetchService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-                .also {
-                    alarmManager.setRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        calendar.timeInMillis,
-                        24 * 60 * 60 * 1000,
-                        it
-                    )
-                }
-        }
 
-
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        PendingIntent.getService(this, 0, intent, flag)
+            .also {
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    24 * 60 * 60 * 1000,
+                    it
+                )
+            }
     }
 
-    /** source: https://www.geeksforgeeks.org/how-to-implement-press-back-again-to-exit-in-android/ */
+    /**
+     * Prompts for confirmation before the app closes by the back button
+     * source: https://www.geeksforgeeks.org/how-to-implement-press-back-again-to-exit-in-android/ */
     override fun onBackPressed() {
         if (timeOnPressed + 2000 > System.currentTimeMillis()) {
             super.onBackPressed()

@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widgetLayout"
     style="@style/Widget.Jrivia.AppWidget.Container"
     android:layout_width="match_parent"
@@ -21,5 +20,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        tools:text="What was the name of the very first president of the U.S.A.?" />
+        android:text="@string/today_not_available_yet" />
 </LinearLayout>

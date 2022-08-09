@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Jrivia</string>
     <string name="welcome">Welcome to Jrivia</string>
-    <string name="single_player">Single-Player</string>
+    <string name="single_player">Single-player</string>
     <string name="multiplayer">Multiplayer (coming soon)</string>
     <string name="scoreboard">Scoreboard</string>
     <string name="start">Start Game</string>
-    <string name="explanation" translatable="false">%1$d trivia questions will be loaded. When you press the button \"Start Game\", a timer will start running. The time is not used for the score itself, but to determine the best when two scores are equal.</string>
+    <string name="game_explanation">%1$d Jrivia questions will be loaded. When you press the button \"Start Game\", a timer will start running.\nThe time is not used for the score itself, but to determine the best when two scores are equal.</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="question_number">Question %1$d</string>
@@ -39,7 +39,7 @@
     <string name="per_number">Per number</string>
     <string name="username">Username</string>
     <string name="total">Total</string>
-    <string name="daily_quest">Daily Quest</string>
+    <string name="daily_quest">Jrivia\'s Daily Quest</string>
     <string name="solve_daily_quest">Solve daily quest</string>
     <string name="view_quests_of_last_month">View quests of last month</string>
     <string name="share">Share</string>
@@ -65,19 +65,26 @@
     <string name="solve_and_add_points_button">+ %1$d points</string>
     <string name="points_earned">%1$d points earned</string>
     <string name="solved_quests">solved quests</string>
-    <string name="not_available_yet">No daily quest available yet.\nA notification will be sent when there\'s one available.</string>
+    <string name="not_available_yet">Today\'s quest is not available yet.\nA notification will be sent when there\'s one available.</string>
     <string name="new_quest_available">New daily quest available</string>
+    <string name="questions_overview">Questions overview</string>
+    <string name="today_not_available_yet">Today\'s quest is not available yet</string>
+    <string name="missed_chance">You missed your chance</string>
+    <string name="score_selected">Score selected</string>
+    <string name="explanation">Explanation</string>
+    <string name="game_overview_error">Something went wrong while trying to finish the game</string>
 
     <!-- plurals -->
     <plurals name="in_guesses">
         <item quantity="one">in 1 guess</item>
         <item quantity="other">in %1$d guesses</item>
     </plurals>
+    <string name="zero_guesses_already">No guesses yet</string>
     <plurals name="guesses">
         <item quantity="one">1 guess</item>
         <item quantity="other">%1$d guesses</item>
     </plurals>
-    <string name="zero_guesses_already">No guesses yet</string>
+
     <plurals name="guesses_already">
         <item quantity="one">1 guess already</item>
         <item quantity="other">%1$d guesses already</item>

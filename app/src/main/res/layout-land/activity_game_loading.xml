@@ -26,15 +26,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="username"
                 android:hint="@string/username"
                 android:imeOptions="actionDone"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/numberOfQuestionsSlider"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:contentDescription="@string/number_of_questions"
                 android:stepSize="5.0"
                 android:valueFrom="5.0"
                 android:valueTo="25.0"
@@ -67,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/explanation" />
+        tools:text="@string/game_explanation" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -30,10 +30,10 @@ class DailyQuestsHistoryFragment : Fragment(), DailyQuestAdapter.OnDailyQuestCli
         _binding = FragmentDailyQuestsHistoryBinding.inflate(layoutInflater)
 
         dailyQuestViewModel.getQuestsOfLastMonth().observe(requireActivity()) { dailyQuests ->
-
             binding.apply {
                 dailyQuestsHistoryRecyclerView.apply {
-                    adapter = DailyQuestAdapter(dailyQuests, requireContext()) { onDailyQuestClick(it) }
+                    adapter =
+                        DailyQuestAdapter(dailyQuests, requireContext()) { onDailyQuestClick(it) }
                     setHasFixedSize(true)
                 }
                 totalPointsTextView.text =
@@ -52,6 +52,7 @@ class DailyQuestsHistoryFragment : Fragment(), DailyQuestAdapter.OnDailyQuestCli
         _binding = null
     }
 
+    // implementation of the OnDailyClickListener, so that this fragment know which daily quest was clicked
     override fun onDailyQuestClick(position: Int) {
         Intent(activity, DailyQuestDetailActivity::class.java)
             .apply { putExtra(IntentExtraNames.DAILY_QUEST_INDEX, position) }

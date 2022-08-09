@@ -14,6 +14,9 @@ import be.ehb.gdt.jrivia.viewmodels.DailyQuestViewModelFactory
 import be.ehb.gdt.jrivia.viewmodels.DailyQuestViewModel
 import be.ehb.gdt.jrivia.util.IntentExtraNames
 
+/**
+ * FragmentActivity is used instead of AppCompatActivity, so this view can be passed to the adapter of the viewPager
+ */
 class DailyQuestDetailActivity : FragmentActivity() {
     private lateinit var binding: ActivityDailyQuestDetailBinding
     private lateinit var viewPager: ViewPager2
@@ -21,12 +24,12 @@ class DailyQuestDetailActivity : FragmentActivity() {
         DailyQuestViewModelFactory((application as JriviaApplication).dailyQuestRepository)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDailyQuestDetailBinding.inflate(layoutInflater)
 
+        // finish is used, so that the parent activity would not be recreated and so it remembers at which tab it was
         binding.dailyQuestDetailToolbar.setNavigationOnClickListener { finish() }
 
         viewPager = binding.dailyQuestDetailPager
@@ -34,11 +37,11 @@ class DailyQuestDetailActivity : FragmentActivity() {
         dailyQuestViewModel.getQuestsOfLastMonth().observe(this) {
             viewPager.apply {
                 adapter = DailyQuestDetailStateAdapter(this@DailyQuestDetailActivity, it)
-                currentItem = intent.getIntExtra(IntentExtraNames.DAILY_QUEST_INDEX, 0)
+                currentItem = intent.getIntExtra(IntentExtraNames.DAILY_QUEST_INDEX, 0) // set the index of selected quest as current
                 registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        binding.dailyQuestDetailToolbar.title = it[position].formattedDate
+                        binding.dailyQuestDetailToolbar.title = it[position].formattedDate // set the date of the selected quest as app bar title
                     }
                 })
             }
@@ -51,6 +54,9 @@ class DailyQuestDetailActivity : FragmentActivity() {
         FragmentStateAdapter(fragment) {
         override fun getItemCount() = dataset.size
 
+        /**
+         * creates an fragment based on the index of the dataset
+         */
         override fun createFragment(position: Int): Fragment {
             val fragment = DailyQuestDetailFragment()
             fragment.arguments = Bundle().apply {

@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Button sytles are ignored because of the linear layout -->
     <LinearLayout
         android:id="@+id/homeButtonsLayout"
         android:layout_width="match_parent"

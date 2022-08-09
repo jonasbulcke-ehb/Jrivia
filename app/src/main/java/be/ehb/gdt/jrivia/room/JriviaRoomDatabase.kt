@@ -48,7 +48,7 @@ abstract class JriviaRoomDatabase : RoomDatabase() {
                 return
             }
             val quest = DailyQuest(1,"It recently moved ahead of Chicago to become our 2nd largest", "Los Angeles", 100)
-            quest.dateInMillis = System.currentTimeMillis() - 24 * 60 * 60 * 1000
+            quest.dateInMillis = System.currentTimeMillis() - 23 * 60 * 60 * 1000
             dao.insertQuest(quest)
         }
     }

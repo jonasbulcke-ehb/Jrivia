@@ -18,49 +18,51 @@ class GameLoadingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameLoadingBinding
     private val loadingViewModel: GameLoadingViewModel by viewModels()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameLoadingBinding.inflate(layoutInflater)
         val view = binding.root
 
+        supportActionBar?.title = getString(R.string.single_player)
+
         binding.numberOfQuestionsSlider.addOnChangeListener { _, value, _ ->
             loadingViewModel.numberOfQuestions = value.toInt()
             updateView()
-            fetchGame()
+            fetchGame() // fetch a new game with the new number of questions
         }
 
         binding.usernameEditText.apply {
             addTextChangedListener {
-                binding.startButton.isEnabled = isUsernameValid()
-                loadingViewModel.username = binding.usernameEditText.text.trim().toString()
+                binding.startButton.isEnabled =
+                    isUsernameValid() // enables the start button when the username is filled in
+                loadingViewModel.username = binding.usernameEditText.text.trim()
+                    .toString() // already stores the username in the viewModel
             }
-            setText(loadingViewModel.username)
+            setText(loadingViewModel.username) // set the editText to the username if there is already one foreseen
         }
 
-        binding.startButton.apply {
-            isEnabled = isUsernameValid()
-        }
+        binding.startButton.isEnabled =
+            isUsernameValid() // enables the start button if there's already a username
+
         binding.startButton.setOnClickListener {
-            loadingViewModel.saveUsername()
+            loadingViewModel.saveUsername() // saves the username locally, so that the user does not always have to fill in the username field
+            val game = Game(
+                loadingViewModel.clues,
+                loadingViewModel.username,
+                loadingViewModel.numberOfQuestions
+            )
             Intent(this, GameActivity::class.java)
                 .apply {
-                    val game = Game(
-                        loadingViewModel.clues,
-                        loadingViewModel.username,
-                        loadingViewModel.numberOfQuestions
-                    )
                     putExtra(IntentExtraNames.GAME, game)
                 }.also {
                     startActivity(it)
                 }
         }
-
         setContentView(view)
     }
 
     private fun isUsernameValid(): Boolean {
-        return binding.usernameEditText.text.isNotBlank()
+        return binding.usernameEditText.text.isNotBlank() // checks if the username is filled in
     }
 
     // this method is overridden, so when the user come back at this loading activity, a new game is fetched
@@ -70,16 +72,17 @@ class GameLoadingActivity : AppCompatActivity() {
         fetchGame()
     }
 
+    // when the fetching happens successfully
     private fun onSuccess() {
         binding.questionLoaderProgressIndicator.visibility = View.GONE
         binding.startButton.visibility = View.VISIBLE
     }
 
+    // when there goes something wrong while fetching
     private fun onFailure() {
         binding.questionLoaderProgressIndicator.apply {
             isIndeterminate = false
             progress = 99
-
         }
 
         Snackbar.make(
@@ -100,14 +103,13 @@ class GameLoadingActivity : AppCompatActivity() {
         binding.startButton.visibility = View.INVISIBLE
         binding.questionLoaderProgressIndicator.visibility = View.VISIBLE
 
-        loadingViewModel.fetchClues({ onSuccess() }, { onFailure() })
+        loadingViewModel.fetchClues(::onSuccess, ::onFailure)
     }
-
 
     private fun updateView() {
         binding.numberOfQuestionsLabelTextView.text =
             getString(R.string.number_of_questions_with_number, loadingViewModel.numberOfQuestions)
         binding.explanationTextView.text =
-            getString(R.string.explanation, loadingViewModel.numberOfQuestions)
+            getString(R.string.game_explanation, loadingViewModel.numberOfQuestions)
     }
 }

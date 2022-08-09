@@ -36,6 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/questionsProgressIndicator" />
 
+    <!-- android:lines is here set, so that EditText and Buttons stay on the same place to lower the impact on the user's flow during the game-->
     <TextView
         android:id="@+id/gameQuestionTextView"
         android:layout_width="match_parent"
@@ -54,6 +55,7 @@
         android:layout_marginHorizontal="8dp"
         android:hint="@string/answer"
         android:imeOptions="actionNext"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:minHeight="48dp"
         android:textSize="18sp"

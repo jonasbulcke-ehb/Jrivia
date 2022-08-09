@@ -31,16 +31,14 @@ class DailyQuestAdapter(
         @SuppressLint("SimpleDateFormat")
         fun bind(dailyQuest: DailyQuest) {
             dateTextView.text = dailyQuest.formattedDate
-            solvedInGuessesTextView.apply {
-                text =
-                    if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-                        dailyQuest.guesses.toString()
-                    else
-                        resources.getQuantityString(
-                            R.plurals.guesses, dailyQuest.guesses, dailyQuest.guesses
-                        )
-                isVisible = dailyQuest.isSolved
-            }
+            solvedInGuessesTextView.text =
+                if (context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
+                    dailyQuest.guesses.toString()
+                else
+                    context.resources.getQuantityString(
+                        R.plurals.guesses, dailyQuest.guesses, dailyQuest.guesses
+                    )
+
             isSolvedCheckBox.isChecked = dailyQuest.isSolved
             questionTextView.text = dailyQuest.question
         }

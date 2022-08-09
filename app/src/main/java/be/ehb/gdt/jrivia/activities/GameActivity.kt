@@ -34,7 +34,7 @@ class GameActivity : AppCompatActivity() {
 
         setContentView(view)
 
-        // change behavior of the enter button of the keyboard
+        // change the behavior of the enter button of the keyboard
         binding.answerEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_NEXT -> {
@@ -48,10 +48,8 @@ class GameActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener { onBackClick() }
         binding.chronometer.setTextColor(binding.questionNumberTextView.currentTextColor)
 
-
         // data from intents
         val game: Game? = intent.getParcelableExtra(IntentExtraNames.GAME)
-
 
         if (game == null) {
             Snackbar.make(
@@ -65,10 +63,9 @@ class GameActivity : AppCompatActivity() {
 
         } else {
             gameViewModel.game = game
-            binding.chronometer.base = SystemClock.elapsedRealtime()
+            binding.chronometer.base = SystemClock.elapsedRealtime() // set the time of the chronometer to the current time
             binding.chronometer.start()
         }
-
         updateView()
     }
 
@@ -110,11 +107,13 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    /** back button of the system */
+    /**
+     * The behavior of the system's back button is overridden, where the chronometer is paused and
+     * the activity prompts for confirmation if the game should be stopped
+     */
     override fun onBackPressed() {
-        // stop the chronometer
-        binding.chronometer.stop()
-        gameViewModel.pauseOffSet = SystemClock.elapsedRealtime() - binding.chronometer.base
+        binding.chronometer.stop() // this stops the chronometer, but only in the UI and not in the code behind it, that why a pauseOffSet will be stored
+        gameViewModel.pauseOffSet = SystemClock.elapsedRealtime() - binding.chronometer.base // subtract the start time of the chronometer from the current time
 
         val alertDialog: AlertDialog = this.let {
             val builder = AlertDialog.Builder(this)
@@ -123,11 +122,12 @@ class GameActivity : AppCompatActivity() {
                 .setPositiveButton(R.string.end) { _, _ -> super.onBackPressed() }
                 .setNegativeButton(R.string.cancel) { dialog: DialogInterface?, _ ->
                     dialog?.cancel()
+
+                    // this sets the start time of the chronometer to the current time minus the pauseOffSet, this makes sure the pauseOffSet is shown in stead the current passed time
                     binding.chronometer.base =
                         SystemClock.elapsedRealtime() - gameViewModel.pauseOffSet
                     binding.chronometer.start()
                 }
-
             builder.create()
         }
         alertDialog.show()

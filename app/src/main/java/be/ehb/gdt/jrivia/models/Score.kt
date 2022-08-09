@@ -1,6 +1,5 @@
 package be.ehb.gdt.jrivia.models
 
-import android.content.res.Resources
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import be.ehb.gdt.jrivia.R
@@ -56,16 +55,5 @@ data class Score(
         result = 31 * result + correctNumberOfQuestions
         result = 31 * result + totalNumberOfQuestions
         return result
-    }
-
-    override fun toString(): String {
-        return Resources.getSystem().getString(
-            R.string.clue_to_string,
-            username,
-            value,
-            correctNumberOfQuestions,
-            totalNumberOfQuestions,
-            formattedTime
-        )
     }
 }

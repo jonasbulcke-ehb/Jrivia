@@ -1,7 +1,8 @@
 package be.ehb.gdt.jrivia.adapters
 
-import android.content.Context
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
@@ -11,15 +12,20 @@ import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.activities.ScoreBoardActivity
 import be.ehb.gdt.jrivia.models.Score
 
+/**
+ * This adapter inherits from the ListAdapter in stead of the RecyclerView.Adapter, because the dataset list can change a lot
+ *
+ * @property onLongScoreClickListener the listener for long clicks that will be assigned to each view holder
+ */
 class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickListener) :
     ListAdapter<Score, ScoreListAdapter.ScoreViewHolder>(ScoreComparator()),
-    ScoreBoardActivity.NoticeShowAllListener {
-    private var showAll = false
-    private val holders = ArrayList<ScoreViewHolder>()
+    ScoreBoardActivity.OnShowAllChangeListener {
+    private var showAll = false // keeps track if all number of questions should be shown
+    private val holders = ArrayList<ScoreViewHolder>() // list of all the viewHolders that needs to be aware of the changing showAll boolean
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScoreViewHolder {
         val holder = ScoreViewHolder.create(parent)
-        holders.add(holder)
+        holders.add(holder) // the holder is added to the list of holder when the holder is created
         return holder
     }
 
@@ -49,7 +55,7 @@ class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickLis
             totalTextView.isVisible = showAll
         }
 
-        fun setVisibility(isVisibility: Boolean) {
+        fun setTotalVisibility(isVisibility: Boolean) {
             totalTextView.isVisible = isVisibility
         }
 
@@ -73,9 +79,12 @@ class ScoreListAdapter(private val onLongScoreClickListener: OnScoreLongClickLis
         }
     }
 
-    override fun onShowAllChanged(showAll: Boolean) {
+    /**
+     * implementation of the OnShowAllChangedListener
+     */
+    override fun onShowAllChange(showAll: Boolean) {
         this.showAll = showAll
-        holders.forEach { it.setVisibility(showAll) }
+        holders.forEach { it.setTotalVisibility(showAll) } // notify all the view holder to change the visibility of the total column
     }
 
     fun interface OnScoreLongClickListener {

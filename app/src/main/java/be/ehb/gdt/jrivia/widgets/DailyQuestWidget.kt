@@ -4,69 +4,79 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.asLiveData
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.activities.DailyQuestsActivity
+import be.ehb.gdt.jrivia.models.DailyQuest
 import be.ehb.gdt.jrivia.room.DailyQuestRepository
 import be.ehb.gdt.jrivia.room.JriviaRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-/**
- * Implementation of App Widget functionality.
- */
+@RequiresApi(Build.VERSION_CODES.M)
 class DailyQuestWidget : AppWidgetProvider() {
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        appWidgetIds.forEach {
-            updateAppWidget(context, appWidgetManager, it)
+    private val job = SupervisorJob()
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + job)
+
+    override fun onReceive(context: Context, intent: Intent?) {
+        super.onReceive(context, intent)
+
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val ids = appWidgetManager.getAppWidgetIds(
+            ComponentName(context, DailyQuestWidget::class.java)
+        )
+
+        val repository = DailyQuestRepository(
+            JriviaRoomDatabase.getDatabase(context, coroutineScope).dailyQuestDao()
+        )
+
+        coroutineScope.launch {
+            repository.getLastQuest().collect { dailyQuest: DailyQuest? ->
+
+                ids.forEach {
+                    updateAppWidget(context, appWidgetManager, it, dailyQuest)
+                }
+            }
         }
     }
 
-    override fun onEnabled(context: Context) {
-        // Enter relevant functionality for when the first widget is created
+    override fun onDisabled(context: Context?) {
+        super.onDisabled(context)
+        job.cancel()
     }
 
-    override fun onDisabled(context: Context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
 }
 
+@RequiresApi(Build.VERSION_CODES.M)
 @SuppressLint("RemoteViewLayout")
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
-    appWidgetId: Int
+    appWidgetId: Int,
+    dailyQuest: DailyQuest?
 ) {
     // Construct the RemoteViews object
     val views = RemoteViews(context.packageName, R.layout.widget_daily_quest)
 
-    val pendingIntent = PendingIntent.getActivity(
+    if (dailyQuest?.isFromToday() == true) {
+        views.setTextViewText(R.id.widgetDailyTextView, dailyQuest.question)
+    }
+
+    PendingIntent.getActivity(
         context,
         0,
-        Intent(context, DailyQuestsActivity::class.java),
-        PendingIntent.FLAG_IMMUTABLE
-    )
-
-    val repository =
-        DailyQuestRepository(
-            JriviaRoomDatabase.getDatabase(context, CoroutineScope(Dispatchers.IO)).dailyQuestDao()
-        )
-
-    repository.getLastQuest().asLiveData().observeForever {
-        Log.d("WIDGET", it.question)
-        views.setTextViewText(R.id.widgetDailyTextView, it.question)
-//        views.setOnClickPendingIntent(R.id.widgetLayout, pendingIntent)
+        Intent(context, DailyQuestsActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) },
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    ).also {
+        views.setOnClickPendingIntent(R.id.widgetLayout, it)
     }
 
     // Instruct the widget manager to update the widget

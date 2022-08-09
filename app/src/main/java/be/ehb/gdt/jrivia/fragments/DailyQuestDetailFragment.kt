@@ -24,11 +24,7 @@ class DailyQuestDetailFragment : Fragment() {
     ): View {
         _binding = FragmentDailyQuestDetailBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // as this fragment will be invoked manually by a viewPager instead of the normal Intents, the data that is passing needs to be taken this way
         arguments?.takeIf { it.containsKey(IntentExtraNames.DAILY_QUEST) }?.apply {
             val dailyQuest: DailyQuest = get(IntentExtraNames.DAILY_QUEST) as DailyQuest
             binding.dailyQuestDetailQuestionTextView.text = dailyQuest.question
@@ -53,7 +49,10 @@ class DailyQuestDetailFragment : Fragment() {
                 binding.detailAnswerTextView.text = dailyQuest.answer
             }
         }
+
+        return binding.root
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

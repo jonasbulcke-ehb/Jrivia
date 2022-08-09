@@ -13,9 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:autofillHints="@string/username"
         android:hint="@string/username"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        tools:text="Jonas" />
 
     <TextView
         android:id="@+id/numberOfQuestionsLabelTextView"
@@ -30,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:contentDescription="@string/number_of_questions"
         android:stepSize="5.0"
         android:valueFrom="5.0"
         android:valueTo="25.0" />
@@ -41,7 +45,7 @@
         android:layout_margin="8dp"
         android:lines="5"
         android:textSize="18sp"
-        tools:text="@string/explanation" />
+        tools:text="@string/game_explanation" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

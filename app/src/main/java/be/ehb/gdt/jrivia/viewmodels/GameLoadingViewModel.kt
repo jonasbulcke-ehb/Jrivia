@@ -30,7 +30,6 @@ class GameLoadingViewModel(application: Application) : AndroidViewModel(applicat
                         response: Response<List<Clue>>
                     ) {
                         if (response.code() == 200) {
-//                        @Suppress("UNCHECKED_CAST")
                             clues = response.body()!!
                             clues.forEach {
                                 if (it.answer.contains("<i>")) {
@@ -47,9 +46,9 @@ class GameLoadingViewModel(application: Application) : AndroidViewModel(applicat
                 }
             )
         }
-
     }
 
+    // method that will cache the username, so the user won't have to fill it in all the time
     fun saveUsername() {
         with(sharedPref.edit()) {
             putString(USERNAME_KEY, username)
@@ -61,7 +60,5 @@ class GameLoadingViewModel(application: Application) : AndroidViewModel(applicat
         const val PREFERENCE_USERNAME_KEY =
             "be.ehb.gdt.jrivia.models.viewModels.GameLoadingViewModel.PREFERENCE_USERNAME_KEY"
         const val USERNAME_KEY = "username"
-
     }
-
 }

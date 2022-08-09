@@ -28,6 +28,7 @@ class ResultsButtonsFragment : Fragment() {
         val view = binding.root
 
         binding.playAgainButton.setOnClickListener { activity?.finish() }
+
         binding.menuButton.setOnClickListener {
             Intent(context, MainActivity::class.java)
                 .apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) }

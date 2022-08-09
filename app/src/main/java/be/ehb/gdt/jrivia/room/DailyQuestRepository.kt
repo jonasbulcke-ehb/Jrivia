@@ -5,7 +5,6 @@ import be.ehb.gdt.jrivia.models.DailyQuest
 import kotlinx.coroutines.flow.Flow
 
 class DailyQuestRepository(private val dailyQuestDao: DailyQuestDao) {
-//
     fun getLastQuest(): Flow<DailyQuest> = dailyQuestDao.getLastQuest()
 
     fun getLastQuests(numberOfQuests: Int = 30): Flow<List<DailyQuest>> =

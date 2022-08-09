@@ -1,29 +1,22 @@
 package be.ehb.gdt.jrivia.fragments
 
 import android.app.Activity
-import android.content.ComponentName
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import android.hardware.input.InputManager
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.IBinder
 import android.text.InputType
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.liveData
 import be.ehb.gdt.jrivia.JriviaApplication
 import be.ehb.gdt.jrivia.R
 import be.ehb.gdt.jrivia.databinding.FragmentDailyQuestsTodayBinding
@@ -31,7 +24,6 @@ import be.ehb.gdt.jrivia.models.DailyQuest
 import be.ehb.gdt.jrivia.services.DailyQuestFetchService
 import be.ehb.gdt.jrivia.viewmodels.DailyQuestViewModel
 import be.ehb.gdt.jrivia.viewmodels.DailyQuestViewModelFactory
-import kotlinx.coroutines.launch
 
 class DailyQuestsTodayFragment : Fragment() {
     private var _binding: FragmentDailyQuestsTodayBinding? = null
@@ -41,26 +33,34 @@ class DailyQuestsTodayFragment : Fragment() {
         DailyQuestViewModelFactory((requireActivity().application as JriviaApplication).dailyQuestRepository)
     }
 
-    private lateinit var fetchService: DailyQuestFetchService
-    private var serviceBound = false
+    private var isReceiverRegistered = false // keeps track whether the receiver is registered
+    private var broadcastReceiver: DailyQuestBroadcastReceiver? = null
 
-//    private val connection = object : ServiceConnection {
-//        override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
-//            val binder = service as DailyQuestFetchService.DailyQuestFetchBinder
-//            fetchService = binder.getService()
-//            serviceBound = true
-//        }
-//
-//        override fun onServiceDisconnected(p0: ComponentName?) {
-//            serviceBound = false
-//        }
-//    }
+    // overridden so the broadcast receiver can be registered
+    override fun onResume() {
+        super.onResume()
+        // this receiver is used to let the UI know if there is a new daily quest and so the UI needs to be updated
+        if (!isReceiverRegistered) {
+            if (broadcastReceiver == null)
+                broadcastReceiver = DailyQuestBroadcastReceiver()
+            IntentFilter(DailyQuestFetchService.UPDATE_TODAY_QUEST_VIEW).also {
+                activity?.registerReceiver(broadcastReceiver, it)
+            }
+            isReceiverRegistered = true
+        }
+    }
 
-//    override fun onStop() {
-//        super.onStop()
-//        activity?.unbindService(connection)
-//        serviceBound = false
-//    }
+    // overridden so the broadcast receiver can be unregistered and that the today's quest only needs to be updated when the fragment is paused
+    override fun onPause() {
+        super.onPause()
+        if (isReceiverRegistered) {
+            activity?.unregisterReceiver(broadcastReceiver)
+            broadcastReceiver = null
+            isReceiverRegistered = false
+        }
+        if (binding.todayQuestLayout.isVisible && !viewModel.lastQuest.isSolved)
+            viewModel.updateLastQuest()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,10 +69,11 @@ class DailyQuestsTodayFragment : Fragment() {
     ): View {
         _binding = FragmentDailyQuestsTodayBinding.inflate(inflater, container, false)
 
+        // bind the last quest to this view
         viewModel.getLastQuest().observe(requireActivity()) {
-            if(it == null) {
+            if (it == null) {
                 binding.todayQuestLayout.isVisible = false
-                binding.todayQuestProgressIndicator.isVisible = true
+                binding.questOfTodayUnavailableTextView.isVisible = true
             } else {
                 viewModel.lastQuest = it
                 updateView(it)
@@ -81,10 +82,13 @@ class DailyQuestsTodayFragment : Fragment() {
 
         binding.solveAndAddPointsButton.setOnClickListener { onGuess() }
 
+        // disable the button if there is no answer filled in or if the last quest is not from today
         binding.todayAnswerEditText.addTextChangedListener {
-            binding.solveAndAddPointsButton.isEnabled = it!!.isNotBlank()
+            binding.solveAndAddPointsButton.isEnabled =
+                it!!.isNotBlank() && viewModel.lastQuest.isFromToday()
         }
 
+        // change the behavior of the enter button
         binding.todayAnswerEditText.setOnEditorActionListener { _, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -99,27 +103,33 @@ class DailyQuestsTodayFragment : Fragment() {
     }
 
     private fun onGuess() {
-        val isSolved = binding.todayAnswerEditText.text.trim().toString()
-            .lowercase() == viewModel.lastQuest.answer.lowercase()
-        viewModel.lastQuest.guesses++
-        viewModel.lastQuest.isSolved = isSolved
-        if (isSolved) {
-            viewModel.updateLastQuest()
+        if (binding.todayAnswerEditText.text.isNotBlank()) {
+            val isSolved = binding.todayAnswerEditText.text.trim().toString()
+                .lowercase() == viewModel.lastQuest.answer.lowercase()
+            viewModel.lastQuest.guesses++
+            viewModel.lastQuest.isSolved = isSolved
+            if (isSolved) {
+                viewModel.updateLastQuest()
 
-            binding.todayAnswerEditText.clearFocus()
+                binding.todayAnswerEditText.clearFocus()
 
-            val inputMethodManager =
-                activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+                // let the keyboard disappear
+                val inputMethodManager =
+                    activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
+            }
+
+            updateView(viewModel.lastQuest)
         }
-
-        updateView(viewModel.lastQuest)
     }
 
     private fun updateView(dailyQuest: DailyQuest) {
         binding.apply {
-            todayQuestProgressIndicator.isVisible = false
+            // hide the unavailable textview and show the other layout
+            questOfTodayUnavailableTextView.isVisible = false
             todayQuestLayout.isVisible = true
+
+            // checks first if the quest if the quest is solved and from today
             if (dailyQuest.isSolved) {
                 solveAndAddPointsButton.text = getString(R.string.points_earned, dailyQuest.value)
                 todayGuessesTextView.text =
@@ -130,7 +140,7 @@ class DailyQuestsTodayFragment : Fragment() {
                     )
                 todayAnswerEditText.apply {
                     setText(dailyQuest.answer)
-                    inputType = InputType.TYPE_NULL
+                    inputType = InputType.TYPE_NULL // makes the editText uneditable
                 }
                 isSolvedTextView.text = getString(R.string.have_solved)
                 isSolvedTextView.setTextColor(
@@ -139,10 +149,16 @@ class DailyQuestsTodayFragment : Fragment() {
                         R.color.primaryColor
                     )
                 )
-            } else {
-                todayAnswerEditText.text.clear()
+                solveAndAddPointsButton.isEnabled = false
+            } else if (dailyQuest.isFromToday()) {
+                todayAnswerEditText.apply {
+                    text.clear()
+                    inputType = InputType.TYPE_CLASS_TEXT // makes the editText editable
+                    isFocusableInTouchMode = true
+                }
                 solveAndAddPointsButton.text =
                     getString(R.string.solve_and_add_points_button, dailyQuest.value)
+                solveAndAddPointsButton.isEnabled = false
                 todayGuessesTextView.text =
                     if (dailyQuest.guesses == 0) getString(R.string.zero_guesses_already)
                     else resources.getQuantityString(
@@ -157,20 +173,41 @@ class DailyQuestsTodayFragment : Fragment() {
                         R.color.secondaryColor
                     )
                 )
+            } else {
+                todayAnswerEditText.apply {
+                    setText(dailyQuest.answer)
+                    inputType = InputType.TYPE_NULL
+                    isFocusable = false
+                }
+                solveAndAddPointsButton.text =
+                    getString(R.string.solve_and_add_points_button, dailyQuest.value)
+                isSolvedTextView.text = getString(R.string.missed_chance)
+                isSolvedTextView.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.secondaryColor
+                    )
+                )
+                todayGuessesTextView.text =
+                    resources.getQuantityString(
+                        R.plurals.guesses,
+                        dailyQuest.guesses,
+                        dailyQuest.guesses
+                    )
             }
             solveAndAddPointsButton.isEnabled = false
             todayQuestionTextView.text = dailyQuest.question
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        if(binding.todayQuestLayout.isVisible && !viewModel.lastQuest.isSolved)
-            viewModel.updateLastQuest()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    inner class DailyQuestBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            updateView(viewModel.lastQuest)
+        }
     }
 }

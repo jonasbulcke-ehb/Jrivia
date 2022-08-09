@@ -18,7 +18,7 @@ class ConfirmScoreDeletionDialogFragment(private val listener: ConfirmScoreDelet
                 .setMessage(R.string.score_deletion_warning)
                 .setNegativeButton(R.string.cancel) { _, _ -> dialog?.cancel() }
                 .setPositiveButton(R.string.delete) { _, _ ->
-                    listener.onDialogPositiveClick(this)
+                    listener.onDialogPositiveClick()
                 }
 
             return builder.create()
@@ -31,7 +31,7 @@ class ConfirmScoreDeletionDialogFragment(private val listener: ConfirmScoreDelet
     }
 
     interface ConfirmScoreDeletionDialogListener {
-        fun onDialogPositiveClick(dialog: DialogFragment)
+        fun onDialogPositiveClick()
         fun onDialogDismiss()
     }
 }
