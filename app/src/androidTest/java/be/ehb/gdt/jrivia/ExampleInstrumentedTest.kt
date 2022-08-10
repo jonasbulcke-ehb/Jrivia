@@ -28,20 +28,4 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("be.ehb.gdt.jrivia", appContext.packageName)
     }
-
-    @Test
-    fun isDailyQuestTableSeeded() {
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val coroutineScope = CoroutineScope(SupervisorJob())
-        val database = JriviaRoomDatabase.getDatabase(appContext, coroutineScope)
-        val repository = DailyQuestRepository(database.dailyQuestDao())
-
-        val quest = DailyQuest(1,"It recently moved ahead of Chicago to become our 2nd largest", "Los Angeles", 100)
-
-        coroutineScope.launch {
-            repository.getLastQuest().collect {
-                assertEquals(quest, it)
-            }
-        }
-    }
 }

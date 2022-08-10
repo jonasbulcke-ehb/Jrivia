@@ -124,41 +124,41 @@ class DailyQuestsTodayFragment : Fragment() {
     }
 
     private fun updateView(dailyQuest: DailyQuest) {
+        fun setEnabledAnswerEditText(enabled: Boolean) {
+            if (enabled) {
+                binding.todayAnswerEditText.apply {
+                    text.clear()
+                    inputType = InputType.TYPE_CLASS_TEXT // makes the editText editable
+                    isFocusableInTouchMode = true
+                }
+            } else {
+                binding.todayAnswerEditText.apply {
+                    setText(dailyQuest.answer)
+                    inputType = InputType.TYPE_NULL
+                    isFocusable = false
+                }
+            }
+        }
+
         binding.apply {
             // hide the unavailable textview and show the other layout
             questOfTodayUnavailableTextView.isVisible = false
             todayQuestLayout.isVisible = true
 
-            // checks first if the quest if the quest is solved and from today
+            todayQuestionTextView.text = dailyQuest.question
+
+            solveAndAddPointsButton.text = getString(
+                if (dailyQuest.isSolved) R.string.points_earned else R.string.solve_and_add_points_button,
+                dailyQuest.value
+            )
+
             if (dailyQuest.isSolved) {
-                solveAndAddPointsButton.text = getString(R.string.points_earned, dailyQuest.value)
-                todayGuessesTextView.text =
-                    resources.getQuantityString(
-                        R.plurals.guesses,
-                        dailyQuest.guesses,
-                        dailyQuest.guesses
-                    )
-                todayAnswerEditText.apply {
-                    setText(dailyQuest.answer)
-                    inputType = InputType.TYPE_NULL // makes the editText uneditable
-                }
-                isSolvedTextView.text = getString(R.string.have_solved)
-                isSolvedTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.primaryColor
-                    )
+                todayGuessesTextView.text = resources.getQuantityString(
+                    R.plurals.guesses, dailyQuest.guesses, dailyQuest.guesses
                 )
-                solveAndAddPointsButton.isEnabled = false
+                setIsSolvedTextView(R.string.have_solved, R.color.primaryColor)
+                setEnabledAnswerEditText(false)
             } else if (dailyQuest.isFromToday()) {
-                todayAnswerEditText.apply {
-                    text.clear()
-                    inputType = InputType.TYPE_CLASS_TEXT // makes the editText editable
-                    isFocusableInTouchMode = true
-                }
-                solveAndAddPointsButton.text =
-                    getString(R.string.solve_and_add_points_button, dailyQuest.value)
-                solveAndAddPointsButton.isEnabled = false
                 todayGuessesTextView.text =
                     if (dailyQuest.guesses == 0) getString(R.string.zero_guesses_already)
                     else resources.getQuantityString(
@@ -166,37 +166,27 @@ class DailyQuestsTodayFragment : Fragment() {
                         dailyQuest.guesses,
                         dailyQuest.guesses
                     )
-                isSolvedTextView.text = getString(R.string.have_not_solved_yet)
-                isSolvedTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.secondaryColor
-                    )
-                )
+                setIsSolvedTextView(R.string.have_not_solved_yet, R.color.secondaryColor)
+                setEnabledAnswerEditText(true)
             } else {
-                todayAnswerEditText.apply {
-                    setText(dailyQuest.answer)
-                    inputType = InputType.TYPE_NULL
-                    isFocusable = false
-                }
-                solveAndAddPointsButton.text =
-                    getString(R.string.solve_and_add_points_button, dailyQuest.value)
-                isSolvedTextView.text = getString(R.string.missed_chance)
-                isSolvedTextView.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.secondaryColor
-                    )
+                todayGuessesTextView.text = resources.getQuantityString(
+                    R.plurals.guesses, dailyQuest.guesses, dailyQuest.guesses
                 )
-                todayGuessesTextView.text =
-                    resources.getQuantityString(
-                        R.plurals.guesses,
-                        dailyQuest.guesses,
-                        dailyQuest.guesses
-                    )
+                setIsSolvedTextView(R.string.missed_chance, R.color.secondaryColor)
+                setEnabledAnswerEditText(false)
             }
             solveAndAddPointsButton.isEnabled = false
-            todayQuestionTextView.text = dailyQuest.question
+        }
+    }
+
+    private fun setIsSolvedTextView(stringResId: Int, colorResId: Int) {
+        binding.isSolvedTextView.apply {
+            text = getString(stringResId)
+            setTextColor(
+                ContextCompat.getColor(
+                    requireContext(), colorResId
+                )
+            )
         }
     }
 
