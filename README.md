@@ -55,6 +55,7 @@ will be updated with a the new daily quest by a broadcast.
 ## Sources
 
 - [Official Android Documentation](https://d.android.com)
+- [Official Kotlin Documentation](https://kotlinlang.org)
 - [Chronometer/Stopwatch](https://www.youtube.com/watch?v=RLnb4vVkftc)
 - [Up navigation](https://stackoverflow.com/questions/15559838/actionbar-up-navigation-recreates-parent-activity-instead-of-onresume)
 - [Up navigation](https://stackoverflow.com/questions/36391478/how-do-i-navigate-up-to-a-parent-activity-not-on-the-back-stack)
