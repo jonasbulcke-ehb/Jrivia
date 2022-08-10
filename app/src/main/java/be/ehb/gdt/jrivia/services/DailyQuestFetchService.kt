@@ -54,7 +54,7 @@ class DailyQuestFetchService : Service() {
                                     lastQuest = response.body()!![0]
                                     lastQuest?.dateInMillis = System.currentTimeMillis()
                                     scope.launch { dailyQuestRepository.insert(lastQuest!!) }
-                                    sendNotification(lastQuest)
+                                    sendNotification(lastQuest!!)
                                     sendBroadcasts()
                                 } else
                                     Log.e("DAILY_CLUE_FETCH", "Unable to fetch a new daily clue")
@@ -71,7 +71,7 @@ class DailyQuestFetchService : Service() {
         }
     }
 
-    private fun sendNotification(dailyQuest: DailyQuest?) {
+    fun sendNotification(dailyQuest: DailyQuest) {
         val notificationManager =
             applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -79,7 +79,7 @@ class DailyQuestFetchService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(
                 NotificationChannel(
-                    "daily_quest", "Daily Quest", NotificationManager.IMPORTANCE_DEFAULT
+                    NOTIFICATION_CHANNEL_ID, "Daily Quest", NotificationManager.IMPORTANCE_DEFAULT
                 )
             )
 
@@ -92,20 +92,20 @@ class DailyQuestFetchService : Service() {
                 applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE
             )
 
-            val builder = NotificationCompat.Builder(applicationContext, "daily_clue")
+            val builder = NotificationCompat.Builder(applicationContext, NOTIFICATION_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_lightbulb_24)
                 .setContentTitle(getString(R.string.new_quest_available))
-                .setContentText(dailyQuest?.question)
+                .setContentText(dailyQuest.question)
                 .setContentIntent(pendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(dailyQuest?.question))
+                .setStyle(NotificationCompat.BigTextStyle().bigText(dailyQuest.question))
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             notificationManager.notify(0, builder.build())
         }
     }
 
-    private fun sendBroadcasts() {
+    fun sendBroadcasts() {
         // update Widget broadcast
         Intent()
             .apply { action = "android.appwidget.action.APPWIDGET_UPDATE" }
@@ -139,6 +139,7 @@ class DailyQuestFetchService : Service() {
     companion object {
         const val UPDATE_TODAY_QUEST_VIEW =
             "be.ehb.gdt.jrivia.Services.DailyQuestFetchService.UPDATE_TODAY_QUEST_VIEW"
+        const val NOTIFICATION_CHANNEL_ID = "daily_quest"
     }
 
 

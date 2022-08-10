@@ -34,13 +34,6 @@ data class DailyQuest(
     }
 
     fun isFromToday(): Boolean {
-//        val calendarDate = Calendar.getInstance()
-//        calendarDate.timeInMillis = dateInMillis
-//        val calendarNow = Calendar.getInstance()
-//        calendarNow.timeInMillis = System.currentTimeMillis()
-//
-//        return calendarDate.get(Calendar.DATE) == calendarNow.get(Calendar.DATE)
-
         return System.currentTimeMillis() - dateInMillis < 24 * 60 * 60 * 1000
     }
 
