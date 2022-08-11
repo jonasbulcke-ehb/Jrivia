@@ -72,8 +72,10 @@
             android:id="@+id/solveAndAddPointsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/button_background_color"
             android:text="@string/solve_and_add_points_button"
-            app:layout_constraintTop_toBottomOf="@id/todayAnswerEditText" />
+            app:layout_constraintTop_toBottomOf="@id/todayAnswerEditText"
+            tools:ignore="UnusedAttribute" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
