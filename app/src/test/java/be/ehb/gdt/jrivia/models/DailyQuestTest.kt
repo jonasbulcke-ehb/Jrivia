@@ -2,7 +2,6 @@ package be.ehb.gdt.jrivia.models
 
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 
 
@@ -20,10 +19,14 @@ class DailyQuestTest {
 
     @Test
     fun isFromToday_returnsFalse() {
-        val dailyQuest =
+        val dailyQuest1 =
             DailyQuest(1, question, answer, 100, System.currentTimeMillis() - 25 * 60 * 60 * 1000)
 
-        assertFalse(dailyQuest.isFromToday())
+        val dailyQuest2 =
+            DailyQuest(1, question, answer, 100, System.currentTimeMillis() - 2401 * 60 * 60 * 10)
+
+        assertFalse(dailyQuest1.isFromToday())
+        assertFalse(dailyQuest2.isFromToday())
     }
 
 

@@ -5,7 +5,7 @@ import be.ehb.gdt.jrivia.models.DailyQuest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class JriviaDatabaseCallbackTest {
