@@ -32,7 +32,7 @@ class DailyQuestFetchService : Service() {
     private val scope = CoroutineScope(Dispatchers.IO)
     private val dailyQuestRepository by lazy {
         DailyQuestRepository(
-            JriviaRoomDatabase.getDatabase(applicationContext, scope).dailyQuestDao()
+            JriviaRoomDatabase.getDatabase(applicationContext).dailyQuestDao()
         )
     }
 

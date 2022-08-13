@@ -35,7 +35,7 @@ class DailyQuestWidget : AppWidgetProvider() {
         )
 
         val repository = DailyQuestRepository(
-            JriviaRoomDatabase.getDatabase(context, coroutineScope).dailyQuestDao()
+            JriviaRoomDatabase.getDatabase(context).dailyQuestDao()
         )
 
         coroutineScope.launch {

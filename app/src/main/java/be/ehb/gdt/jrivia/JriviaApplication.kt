@@ -8,8 +8,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
 class JriviaApplication : Application() {
-    private val applicationScope = CoroutineScope(SupervisorJob())
-    private val database by lazy { JriviaRoomDatabase.getDatabase(this, applicationScope) }
+    private val database by lazy { JriviaRoomDatabase.getDatabase(this) }
     val scoreRepository by lazy { ScoreRepository(database.scoreDao()) }
     val dailyQuestRepository by lazy { DailyQuestRepository(database.dailyQuestDao()) }
 }

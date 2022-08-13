@@ -19,14 +19,14 @@ abstract class JriviaRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: JriviaRoomDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): JriviaRoomDatabase {
+        fun getDatabase(context: Context): JriviaRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     JriviaRoomDatabase::class.java,
                     "jrivia_database"
                 )
-                    .addCallback(JriviaDatabaseCallback(scope))
+//                    .addCallback(JriviaDatabaseCallback(scope))
                     .build()
 
                 INSTANCE = instance
